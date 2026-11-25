@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>pulponalua · portfolio de Flavia Alonso</title>
+  <meta name="description" content="Portfolio de Flavia Alonso (pulponalua): diseño digital, dirección de arte y marca.">
+  <meta name="theme-color" content="#0000FF">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap">
+  <style>/* =====================================================================
+   pulponalua · portfolio
+   Medidas escritas en "u" = píxeles del diseño de Illustrator (1920 de ancho).
+   build.py convierte  calc(var(--u) * 61)  →  calc(var(--u) * 61)  y genera css/style.css
+   ===================================================================== */
+
+:root{
+  --azul:#0000FF;      /* HEX 0000FF */
+  --celeste:#72A6E1;   /* HEX 72A6E1 */
+  --blanco:#FFFFFF;    /* HEX FFFFFF */
+  --rojo:#CC0000;      /* HEX CC0000 */
+  --negro:#232323;     /* HEX 232323 */
+  --gris:#8d8d8d;
+  --u:calc(100vw / 1920);
+  --font:"code-saver","JetBrains Mono", "Courier New", ui-monospace, monospace;
+  --ease:cubic-bezier(.65,0,.25,1);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;-moz-text-size-adjust:100%;text-size-adjust:100%;overflow-y:scroll;scrollbar-gutter:stable}
+html,body{margin:0}
+body{
+  background:var(--blanco);
+  color:var(--negro);
+  font-family:var(--font);
+  font-weight:500;
+  font-size:calc(var(--u) * 21.5);
+  line-height:calc(var(--u) * 24);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.is-intro{overflow:hidden;height:100vh}
+img,svg{display:block}
+a{color:inherit}
+p{margin:0}
+ul{list-style:none;margin:0;padding:0}
+button{font:inherit;color:inherit}
+::selection{background:var(--celeste);color:var(--blanco)}
+:focus-visible{outline:calc(var(--u) * 3) solid var(--celeste);outline-offset:calc(var(--u) * 4)}
+
+.skip{position:fixed;left:-999px;top:0;z-index:100;background:var(--azul);color:#fff;padding:8px 14px}
+.skip:focus{left:0}
+
+.h1{
+  margin:0;
+  color:var(--azul);
+  font-weight:500;
+  font-size:calc(var(--u) * 64.5);
+  line-height:calc(var(--u) * 78);
+  letter-spacing:0;
+}
+.gris{color:var(--gris);font-size:calc(var(--u) * 22);line-height:calc(var(--u) * 37)}
+
+/* ================= BARRA SUPERIOR ================= */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  height:calc(var(--u) * 92);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(var(--u) * 2) calc(var(--u) * 62) 0 calc(var(--u) * 61);
+  background:var(--blanco);
+  box-shadow:0 calc(var(--u) * 3) calc(var(--u) * 7) rgba(35,35,35,.45);
+  font-size:calc(var(--u) * 28);line-height:calc(var(--u) * 33);
+}
+.nav a{color:var(--azul);text-decoration:none;transition:opacity .25s}
+.nav__links{display:flex;gap:calc(var(--u) * 124.5)}
+.nav__links a:hover{opacity:.55}
+.nav__links a[aria-current="page"]{opacity:.5}
+
+/* ================= BARRA INFERIOR ================= */
+.footer{
+  position:relative;z-index:5;
+  height:calc(var(--u) * 92);
+  background:var(--blanco);
+  box-shadow:0 calc(var(--u) * -2) calc(var(--u) * 6) rgba(35,35,35,.38);
+  display:flex;align-items:center;justify-content:flex-end;
+  padding:0 calc(var(--u) * 62);
+}
+body.is-intro .footer{display:none}
+.social{display:flex;gap:calc(var(--u) * 40)}
+.social a{display:block;width:calc(var(--u) * 40);height:calc(var(--u) * 40);color:var(--azul);transition:transform .25s var(--ease),opacity .25s}
+.social a:hover{transform:translateY(calc(var(--u) * -4)) scale(1.08);opacity:.7}
+.social svg{width:100%;height:100%}
+
+/* ================= VISTAS ================= */
+#app{position:relative}
+.view{display:none;position:relative}
+.view.is-active{display:block;animation:vista-in .5s ease both}
+@keyframes vista-in{from{opacity:0}to{opacity:1}}
+
+.view--intro.is-active,
+.view--sobre.is-active{min-height:max(calc(var(--u) * 1080),100vh)}
+
+/* ----- PRINCIPAL ----- */
+.view--intro.is-active{height:100vh;min-height:0;overflow:hidden}
+.intro__text{
+  position:absolute;left:calc(var(--u) * 66);bottom:calc(var(--u) * 80);
+  color:var(--azul);
+  font-size:calc(var(--u) * 37.3);line-height:calc(var(--u) * 40);
+}
+.intro__umbrella{
+  position:absolute;left:calc(var(--u) * 1702.6);bottom:calc(var(--u) * -2);
+  width:calc(var(--u) * 221.4);height:calc(var(--u) * 660);
+  padding:0;border:0;background:none;cursor:pointer;
+  transform-origin:50% 100%;
+  animation:paraguas-idle 4.2s ease-in-out infinite;
+}
+.intro__umbrella img{width:100%;height:100%;pointer-events:none}
+.intro__umbrella:hover{animation:paraguas-hover .5s var(--ease) forwards}
+@keyframes paraguas-idle{0%,100%{transform:rotate(0)}50%{transform:rotate(1.6deg)}}
+@keyframes paraguas-hover{to{transform:rotate(-4deg) translateY(calc(var(--u) * -8))}}
+body.is-raining .intro__umbrella{animation:none;pointer-events:none}
+
+/* bolita que sigue al cursor en la página principal, invitando a agarrar el paraguas */
+.cursor-bubble{
+  position:fixed;left:0;top:0;z-index:60;
+  width:calc(var(--u) * 205);aspect-ratio:1/1;border-radius:50%;
+  background:var(--azul);color:var(--blanco);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-weight:500;font-size:calc(var(--u) * 25);line-height:calc(var(--u) * 28);letter-spacing:calc(var(--u) * 0.3);
+  padding:calc(var(--u) * 16);box-sizing:border-box;
+  pointer-events:none;will-change:transform;
+  transform:translate(-9999px,-9999px);
+  opacity:0;transition:opacity .25s ease;
+}
+.cursor-bubble.is-on{opacity:1}
+body.is-raining .cursor-bubble{opacity:0}
+body.show-cursor-bubble,body.show-cursor-bubble .intro__umbrella{cursor:none}
+
+/* ----- lluvia / inundación / paraguas: réplica exacta de la animación de referencia -----
+   (coordenadas y curvas calcadas de pulponalua-animacion-inicial.html, lienzo de diseño 1920×1080) */
+.intro-stage{
+  position:fixed;inset:0;z-index:39;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--blanco);pointer-events:none;
+  visibility:hidden;opacity:0;
+}
+.intro-stage.is-on{visibility:visible;opacity:1}
+.intro-stage__inner{position:relative;width:1920px;height:1080px;flex:none;transform-origin:center center}
+.intro-stage__svg{position:absolute;inset:0;width:1920px;height:1080px;display:block}
+
+#umbrellaWrap{
+  transform:translateY(760px);
+  animation:umbrellaRise .8s cubic-bezier(.22,1,.36,1) 2.6s both;
+}
+@keyframes umbrellaRise{
+  0%  {transform:translateY(760px)}
+  70% {transform:translateY(-14px)}
+  85% {transform:translateY(5px)}
+  100%{transform:translateY(0)}
+}
+@media (prefers-reduced-motion:reduce){
+  #umbrellaWrap{animation:none !important;transform:none !important}
+}
+
+/* La página de trabajos va justo debajo de la principal y sube con ella al terminar la animación */
+.intro-stage{will-change:transform}
+#view-trabajos.peek{
+  display:block;position:fixed;inset:0;z-index:40;overflow:hidden;
+  transform:translateY(100vh);
+  will-change:transform;
+}
+#view-trabajos.peek .trabajos__wrap{background:var(--blanco);min-height:100vh}
+#view-trabajos.peek .cover{pointer-events:none}
+
+/* ----- TRABAJOS ----- */
+.trabajos__wrap{padding:calc(var(--u) * 231) 0 calc(var(--u) * 116) calc(var(--u) * 64)}
+.trabajos__wrap .h1{margin-bottom:calc(var(--u) * 102)}
+.view--trabajos .grid{
+  display:grid;
+  grid-template-columns:repeat(2,calc(var(--u) * 822));
+  column-gap:calc(var(--u) * 54);row-gap:calc(var(--u) * 63);
+  margin-left:calc(var(--u) * 49);
+}
+.cover{
+  position:relative;display:block;
+  aspect-ratio:822 / 587;
+  container-type:size;
+  overflow:hidden;
+  background:var(--azul);
+  text-decoration:none;
+  isolation:isolate;
+}
+.cover--maqueta{cursor:default}
+
+/* portada de Dobraondas: réplica exacta de la animación de referencia
+   (obra.js / obra.css): la tarjeta se centra al pasar el ratón y, al
+   pulsar, el papel se parte en dos mitades que giran en 3D dejando ver
+   la foto. Todo en "cqw" propio de .co-marco, así que se adapta solo al
+   tamaño real de la portada (muy parecida en proporción: 819.758/585.594
+   en el original frente a 822/587 aquí). */
+.co-marco{
+  position:absolute;inset:0;
+  container-type:inline-size;
+  overflow:hidden;
+  background:#232323;
+}
+.co-marco > *{ --u2:calc(100cqw / 819.758); }
+
+.co-foto{
+  position:absolute;inset:0;
+  background:url(assets/portada-foto-gris.jpg) center/cover no-repeat;
+}
+.co-capa{position:absolute;inset:0;will-change:transform,opacity;backface-visibility:hidden}
+.co-izq{transform-origin:0% 50%}
+.co-der{transform-origin:100% 50%;visibility:hidden}
+/* mientras está cerrado el papel es una sola pieza (sin junta); al abrirse se parte */
+.co-marco.co-partido .co-izq{clip-path:inset(0 20.563% 0 0)}
+.co-marco.co-partido .co-der{clip-path:inset(0 0 0 79.437%);visibility:visible}
+
+.co-papel,.co-papel-luz{
+  background-image:url(assets/obra-papel.jpg);
+  background-repeat:no-repeat;
+  background-size:calc(873.378 * var(--u2)) calc(623.182 * var(--u2));
+}
+.co-papel{background-position:calc(-26.81 * var(--u2)) calc(-18.79 * var(--u2));opacity:.44}
+.co-papel-luz{background-position:calc(-48.52 * var(--u2)) calc(-18.79 * var(--u2));opacity:.7;mix-blend-mode:soft-light}
+
+.co-cinta{
+  background-image:linear-gradient(to right, rgba(255,251,238,0.390) 0.000%, rgba(255,251,238,0.381) 0.676%, rgba(255,251,238,0.361) 1.351%, rgba(255,251,238,0.341) 2.027%, rgba(255,251,238,0.319) 2.703%, rgba(255,251,238,0.304) 3.378%, rgba(255,251,238,0.286) 4.054%, rgba(255,251,238,0.268) 4.730%, rgba(255,251,238,0.258) 5.405%, rgba(255,251,238,0.252) 6.081%, rgba(255,251,238,0.244) 6.757%, rgba(255,251,238,0.248) 10.135%, rgba(255,251,238,0.248) 89.189%, rgba(255,251,238,0.250) 90.203%, rgba(255,251,238,0.256) 90.878%, rgba(255,251,238,0.264) 91.554%, rgba(255,251,238,0.273) 92.230%, rgba(255,251,238,0.273) 92.568%, rgba(0,0,0,0.182) 92.568%, rgba(0,0,0,0.163) 93.243%, rgba(0,0,0,0.140) 93.919%, rgba(0,0,0,0.117) 94.595%, rgba(0,0,0,0.093) 95.270%, rgba(0,0,0,0.069) 95.946%, rgba(0,0,0,0.045) 96.622%, rgba(0,0,0,0.030) 97.297%, rgba(0,0,0,0.017) 97.973%, rgba(0,0,0,0.011) 98.649%, rgba(0,0,0,0.004) 99.324%, rgba(0,0,0,0.000) 100.000%);
+  background-repeat:no-repeat;
+  background-size:calc(170.88 * var(--u2)) 100%;
+  background-position:calc(493.01 * var(--u2)) 0;
+}
+
+.co-sombra{opacity:0;pointer-events:none}
+.co-sombra.co-izq{background:linear-gradient(to left, rgba(0,0,0,.55) 20.563%, rgba(0,0,0,0) 70%)}
+.co-sombra.co-der{background:linear-gradient(to right, rgba(0,0,0,.55) 79.437%, rgba(0,0,0,0) 100%)}
+
+.co-logo-2024,.co-logo-a{position:absolute;display:block;will-change:transform,opacity}
+.co-logo-2024{left:calc(48.19 * var(--u2));top:calc(44.12 * var(--u2));width:calc(116.44 * var(--u2))}
+
+.co-tarjeta{
+  position:absolute;
+  left:calc(217.15 * var(--u2));top:calc(42.36 * var(--u2));
+  width:calc(385.46 * var(--u2));height:calc(500.87 * var(--u2));
+  background:#f3f3f1 url(assets/obra-tarjeta.jpg) center/cover no-repeat;
+  box-shadow:0 calc(1 * var(--u2)) calc(2 * var(--u2)) rgba(0,0,0,.18), 0 calc(8 * var(--u2)) calc(22 * var(--u2)) rgba(0,0,0,.3);
+  transform-origin:50% 50%;
+  /* estado 1 (cerrado) */
+  transform:translate(calc(238.8 * var(--u2)), calc(86.63 * var(--u2))) rotate(-4.46deg) scale(.5993);
+  will-change:transform;
+  font-family:var(--font);
+  font-weight:500;
+}
+.co-tarjeta > *{position:absolute;margin:0;white-space:nowrap}
+.co-t-titulo{left:calc(17.4 * var(--u2));top:calc(178.18 * var(--u2));font-size:calc(60 * var(--u2));line-height:1;font-weight:500;color:var(--azul)}
+.co-t-texto{left:calc(20.96 * var(--u2));top:calc(247.98 * var(--u2));font-size:calc(16 * var(--u2));line-height:calc(16 * var(--u2));color:#000}
+.co-t-pie{left:calc(20.96 * var(--u2));top:calc(467.42 * var(--u2));font-size:calc(12 * var(--u2));line-height:1;color:var(--azul)}
+
+/* foto que crece a pantalla completa y aterriza en la página del proyecto */
+.expand{
+  position:fixed;z-index:45;overflow:hidden;
+  background:url(assets/dobraondas-foto-gris.jpg) center/cover;
+  will-change:top,left,right,bottom;
+}
+.expand-color{
+  position:absolute;inset:0;opacity:0;will-change:opacity;
+  background:url(assets/obra-foto-color.jpg) center/cover;
+}
+.expand::after{
+  content:"";position:absolute;inset:0;
+  background:url(assets/dobraondas-galeria-1.jpg) center/cover;
+  opacity:0;transition:opacity .75s cubic-bezier(.4,0,.2,1);
+}
+.expand.is-full::after{opacity:1}
+.velo{position:fixed;inset:0;z-index:44;background:var(--blanco);pointer-events:none}
+
+/* resto de portadas: misma estructura y animación que Dobraondas, solo cambian
+   la foto (gris → color), el año, el icono, el texto de la tarjeta y la imagen final */
+.cover-slot{position:relative}
+.cover-slot > .cover{width:100%}
+.co-premio{
+  position:absolute;z-index:3;pointer-events:none;
+  left:calc(-37.58 / 819.758 * 100%);top:calc(450.014 / 585.594 * 100%);
+  width:calc(177.5 / 819.758 * 100%);height:auto;
+}
+.co-logo-a{left:calc(var(--ix,592.55) * var(--u2));top:calc(var(--iy,186.12) * var(--u2));width:calc(var(--iw,84.35) * var(--u2))}
+.co-tarjeta--2l .co-t-titulo{top:calc(137.18 * var(--u2));line-height:calc(60 * var(--u2))}
+.co-tarjeta--2l .co-t-texto{top:calc(263.25 * var(--u2))}
+.co-t-titulo{white-space:nowrap}
+
+#cover-dobraondas .co-foto{background-image:url(assets/dobraondas-foto-gris.jpg)}
+#cover-gally .co-foto{background-image:url(assets/gally-foto-gris.jpg)}
+#cover-fake .co-foto{background-image:url(assets/fake-foto-gris.jpg)}
+#cover-ella-es-mayor .co-foto{background-image:url(assets/ella-foto-gris.jpg)}
+#cover-cuarto-lugar .co-foto{background-image:url(assets/cuarto-foto-gris.jpg)}
+#cover-huevo .co-foto{background-image:url(assets/huevo-foto-gris.jpg)}
+
+.expand--gally{background-image:url(assets/gally-foto-gris.jpg)}
+.expand--gally .expand-color{background-image:url(assets/gally-foto-color.jpg)}
+.expand--gally::after{background-image:url(assets/gally-galeria-1.jpg)}
+.expand--fake{background-image:url(assets/fake-foto-gris.jpg)}
+.expand--fake .expand-color{background-image:url(assets/fake-foto-color.jpg)}
+.expand--fake::after{background-image:url(assets/fake-galeria-1.jpg)}
+.expand--ella-es-mayor{background-image:url(assets/ella-foto-gris.jpg)}
+.expand--ella-es-mayor .expand-color{background-image:url(assets/ella-foto-color.jpg)}
+.expand--ella-es-mayor::after{background-image:url(assets/ella-galeria-1.jpg)}
+.expand--cuarto-lugar{background-image:url(assets/cuarto-foto-gris.jpg)}
+.expand--cuarto-lugar .expand-color{background-image:url(assets/cuarto-foto-color.jpg)}
+.expand--cuarto-lugar::after{background-image:url(assets/cuarto-galeria-1.jpg)}
+.expand--huevo{background-image:url(assets/huevo-foto-gris.jpg)}
+.expand--huevo .expand-color{background-image:url(assets/huevo-foto-color.jpg)}
+.expand--huevo::after{background-image:url(assets/huevo-galeria-1.jpg)}
+
+/* ----- SOBRE MI ----- */
+.sobre__foto{
+  position:absolute;left:calc(var(--u) * 199);top:calc(var(--u) * 224);width:calc(var(--u) * 649);height:calc(var(--u) * 738);margin:0;
+  border-radius:calc(var(--u) * 10);overflow:hidden;
+  box-shadow:calc(var(--u) * 10) calc(var(--u) * 12) calc(var(--u) * 8) rgba(35,35,35,.5);
+}
+.sobre__foto img{width:100%;height:100%;object-fit:cover}
+.sobre__foto figcaption{
+  position:absolute;left:calc(var(--u) * 354);top:calc(var(--u) * 412);color:var(--blanco);font-size:calc(var(--u) * 17);line-height:calc(var(--u) * 24);
+}
+.sobre__texto{position:absolute;left:calc(var(--u) * 943);top:calc(var(--u) * 231);width:calc(var(--u) * 560)}
+.sobre__texto p{margin-bottom:calc(var(--u) * 24);font-size:calc(var(--u) * 21.5);line-height:calc(var(--u) * 24);color:#000}
+.sobre__texto h1+p{margin-top:calc(var(--u) * 35)}
+.sobre__texto a{color:var(--azul);text-decoration:none}
+.sobre__texto a:hover{text-decoration:underline;text-underline-offset:calc(var(--u) * 4)}
+.sobre__dibujo{
+  position:absolute;left:calc(var(--u) * 1350);top:calc(var(--u) * 150);width:calc(var(--u) * 490);height:calc(var(--u) * 880);pointer-events:none;
+}
+
+/* ----- CONTACTO ----- */
+/* la barra inferior sube y corta el sobre, como en las mesas de trabajo */
+.view--contacto.is-active{overflow:hidden;height:calc(100vh - calc(var(--u) * 92));min-height:calc(calc(var(--u) * 1080) - calc(var(--u) * 92))}
+.contacto__col{position:absolute;left:calc(var(--u) * 66);top:calc(var(--u) * 548);z-index:3}
+.contacto__sub{width:calc(var(--u) * 230);margin-top:0;color:var(--gris);font-size:calc(var(--u) * 17);line-height:calc(var(--u) * 18)}
+.pills--col{margin-top:calc(var(--u) * 58)}
+.pills--col li{margin-bottom:calc(var(--u) * 14)}
+.pill{
+  display:inline-block;
+  padding:calc(var(--u) * 7) calc(var(--u) * 17);
+  border:calc(var(--u) * 2.5) solid var(--azul);border-radius:calc(var(--u) * 99);
+  color:var(--azul);background:transparent;
+  font-size:calc(var(--u) * 22.5);line-height:calc(var(--u) * 27);text-decoration:none;white-space:nowrap;
+  transition:background .25s,color .25s;
+}
+a.pill:hover{background:var(--azul);color:var(--blanco)}
+
+.contacto__stage{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.env-wrap{
+  position:absolute;left:calc(var(--u) * 570);top:calc(var(--u) * 211);width:calc(var(--u) * 1072);height:calc(var(--u) * 1301);
+  will-change:transform;
+}
+.env-wrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.env__back{z-index:1}
+.env__front{z-index:4;pointer-events:none}
+.pieza{fill:var(--azul);fill-opacity:.3}
+.textura{mix-blend-mode:multiply;opacity:.4}
+.env__solapa{transform:translateY(16.75px) scaleY(1) translateY(-16.75px)}
+.env__solapa--delante{opacity:0}
+
+.card__sombra{
+  position:absolute;left:calc(var(--u) * 31);top:calc(var(--u) * -5);width:calc(var(--u) * 1030);height:calc(var(--u) * 750);z-index:2;
+  background:url(assets/sobre-sombra-carta.webp) center/100% 100% no-repeat;opacity:.35;
+  pointer-events:none;will-change:transform;
+}
+.card{
+  position:absolute;left:calc(var(--u) * 36);top:0;width:calc(var(--u) * 1000);height:calc(var(--u) * 720);z-index:3;margin:0;
+  background:url(assets/sobre-papel.jpg) center/cover;
+  pointer-events:auto;
+}
+.card__hola{
+  position:absolute;left:calc(var(--u) * 67);top:calc(var(--u) * 36);margin:0;
+  color:var(--azul);font-weight:500;font-size:calc(var(--u) * 99);line-height:calc(var(--u) * 120);
+}
+.field{
+  position:absolute;
+  margin:0;border:calc(var(--u) * 3) solid rgba(35,35,35,.13);
+  background:transparent;color:var(--azul);
+  font:500 calc(var(--u) * 22)/calc(var(--u) * 26) var(--font);
+  box-shadow:inset calc(var(--u) * 2) calc(var(--u) * 3) calc(var(--u) * 5) rgba(35,35,35,.2),inset calc(var(--u) * -1) calc(var(--u) * -1) calc(var(--u) * 2) rgba(255,255,255,.85),calc(var(--u) * 1) calc(var(--u) * 1) 0 rgba(255,255,255,.9);
+  outline:none;
+  transition:border-color .25s,box-shadow .25s;
+}
+.field::placeholder{color:var(--azul);opacity:1}
+.field:focus{border-color:var(--azul);box-shadow:inset calc(var(--u) * 2) calc(var(--u) * 3) calc(var(--u) * 5) rgba(35,35,35,.2),0 0 0 calc(var(--u) * 3) var(--azul)}
+.field--email,.field--asunto{top:calc(var(--u) * 183);height:calc(var(--u) * 87);border-radius:calc(var(--u) * 99);padding:0 calc(var(--u) * 32)}
+.field--email{left:calc(var(--u) * 59);width:calc(var(--u) * 421)}
+.field--asunto{left:calc(var(--u) * 521);width:calc(var(--u) * 423)}
+.field--nota{left:calc(var(--u) * 59);top:calc(var(--u) * 295);width:calc(var(--u) * 885);height:calc(var(--u) * 384);border-radius:calc(var(--u) * 56);padding:calc(var(--u) * 30) calc(var(--u) * 32);resize:none}
+.field.is-error{border-color:var(--rojo);animation:sacudir .4s}
+.field.is-error::placeholder{color:var(--rojo)}
+@keyframes sacudir{25%{transform:translateX(calc(var(--u) * -6))}75%{transform:translateX(calc(var(--u) * 6))}}
+.hp{position:absolute;left:-9999px;opacity:0;width:1px;height:1px}
+
+.contacto__envio{position:absolute;right:calc(var(--u) * 59);bottom:calc(var(--u) * 24);z-index:6}
+.btn-enviar{
+  height:calc(var(--u) * 65);padding:0 calc(var(--u) * 25) calc(var(--u) * 3);
+  border:calc(var(--u) * 2.5) solid var(--azul);border-radius:calc(var(--u) * 99);background:var(--blanco);
+  color:var(--azul);font-size:calc(var(--u) * 30);line-height:calc(var(--u) * 60);cursor:pointer;
+  transition:background .25s,color .25s,opacity .45s ease;
+}
+.btn-enviar:hover:not(:disabled){background:var(--azul);color:var(--blanco)}
+.btn-enviar:disabled{opacity:.5;cursor:default}
+.btn-enviar.is-away{opacity:0;pointer-events:none}
+.err{
+  position:absolute;margin:0;min-height:0;
+  color:var(--rojo);font-size:calc(var(--u) * 17);line-height:calc(var(--u) * 20);
+}
+.err:empty{display:none}
+.err--email{left:calc(var(--u) * 91);top:calc(var(--u) * 277);width:calc(var(--u) * 420)}
+.err--asunto{left:calc(var(--u) * 553);top:calc(var(--u) * 277);width:calc(var(--u) * 420)}
+.err--nota,.err--form{left:calc(var(--u) * 91);top:calc(var(--u) * 687);width:calc(var(--u) * 850)}
+.err--form.is-ok{color:var(--azul)}
+.err a{color:inherit}
+
+/* ----- PROYECTO ----- */
+.view--proyecto.is-active{display:block;padding:calc(var(--u) * 228) 0 calc(var(--u) * 73) calc(var(--u) * 64)}
+.proyecto__cab{display:grid;grid-template-columns:calc(var(--u) * 843) 1fr;position:relative}
+.proyecto__izq{position:relative}
+.view--proyecto .h1{font-size:calc(var(--u) * 70);line-height:calc(var(--u) * 78)}
+.proyecto__izq .gris{margin-top:calc(var(--u) * 13);font-size:calc(var(--u) * 24);line-height:calc(var(--u) * 35)}
+.proyecto__premio{position:absolute;left:calc(var(--u) * 195);top:calc(var(--u) * -52);width:calc(var(--u) * 131.5);height:auto;pointer-events:none}
+.pills--row{display:flex;flex-wrap:wrap;gap:0 calc(var(--u) * 6);margin-top:calc(var(--u) * 22)}
+.pills--row .pill{font-size:calc(var(--u) * 24);line-height:calc(var(--u) * 27);padding:calc(var(--u) * 8) calc(var(--u) * 17);margin-bottom:calc(var(--u) * 17)}
+.pills__salto{flex-basis:100%;height:0}
+.proyecto__texto{padding-top:calc(var(--u) * 6);padding-right:calc(var(--u) * 95)}
+.proyecto__texto p{font-size:calc(var(--u) * 24);line-height:calc(var(--u) * 24);color:#000;white-space:normal;overflow-wrap:break-word;word-break:break-word;hyphens:auto}
+.proyecto__texto p+p{margin-top:calc(var(--u) * 24)}
+.proyecto__galeria{width:calc(var(--u) * 1781);margin:calc(var(--u) * 92.5) 0 0 calc(var(--u) * 5.5)}
+.proyecto__galeria img{display:block;width:100%;height:auto}
+.proyecto__bloque{position:relative;container-type:inline-size}
+.proyecto__nota{
+  position:absolute;
+  left:calc(var(--l) / 1781 * 100%);top:calc(var(--t) / 1781 * 100cqw);
+  --k:1;
+  font-size:calc(24 / 1781 * 100cqw * var(--k));line-height:calc(24 / 1781 * 100cqw * var(--k));color:#000;
+}
+.proyecto__nota p{margin:0;white-space:nowrap}
+.proyecto__nota p+p{margin-top:calc(24 / 1781 * 100cqw * var(--k))}
+.proyecto__caja{
+  position:absolute;display:grid;place-items:center;text-align:center;
+  left:calc(var(--l) / 1781 * 100cqw);top:calc(var(--t) / 1781 * 100cqw);
+  width:calc(var(--cw) / 1781 * 100cqw);height:calc(var(--ch) / 1781 * 100cqw);
+}
+.proyecto__caja--video{background:#232323;overflow:hidden}
+.proyecto__caja--video video{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer}
+.proyecto__caja p{margin:0;color:#fff;font-size:calc(var(--fs) / 1781 * 100cqw);line-height:calc(var(--lh) / 1781 * 100cqw)}
+.proyecto__video{
+  aspect-ratio:1781 / 1001.5;background:#232323;
+  display:grid;place-items:center;container-type:inline-size;
+}
+.proyecto__yt{display:block;position:relative;overflow:hidden}
+.proyecto__yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.proyecto__video--nativo{display:block;position:relative;overflow:hidden}
+.proyecto__video--nativo video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;display:block;cursor:pointer}
+
+/* carrusel (Ella es mayor): ocupa el mismo hueco que el cuadrado negro del diseño */
+.carrusel{position:relative;background:#e3e3e3;overflow:hidden;container-type:inline-size}
+.carrusel__pista{
+  position:absolute;inset:0;display:flex;
+  overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  scrollbar-width:none;overscroll-behavior-x:contain;outline:none;
+}
+.carrusel__pista::-webkit-scrollbar{display:none}
+.carrusel__foto{flex:0 0 100%;min-width:0;margin:0;scroll-snap-align:start;scroll-snap-stop:always}
+.carrusel__foto img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}
+.carrusel__btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:calc(76 / 1781 * 100cqw);height:calc(76 / 1781 * 100cqw);min-width:40px;min-height:40px;
+  display:grid;place-items:center;padding:0;cursor:pointer;
+  border:calc(var(--u) * 2.5) solid var(--azul);border-radius:50%;
+  background:rgba(255,255,255,.85);color:var(--azul);
+  transition:background .25s,color .25s,opacity .25s;
+}
+.carrusel__btn svg{width:45%;height:auto}
+.carrusel__btn:hover{background:var(--azul);color:var(--blanco)}
+.carrusel__btn:focus-visible,.carrusel__puntos button:focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+.carrusel__btn--ant{left:calc(32 / 1781 * 100cqw)}
+.carrusel__btn--sig{right:calc(32 / 1781 * 100cqw)}
+.carrusel__btn[disabled]{opacity:0;pointer-events:none}
+.carrusel__puntos{
+  position:absolute;left:0;right:0;bottom:calc(28 / 1781 * 100cqw);
+  display:flex;justify-content:center;gap:calc(12 / 1781 * 100cqw);
+}
+.carrusel__puntos button{
+  width:calc(14 / 1781 * 100cqw);height:calc(14 / 1781 * 100cqw);min-width:8px;min-height:8px;
+  padding:0;border:2px solid var(--azul);border-radius:50%;background:transparent;cursor:pointer;
+  transition:background .25s;
+}
+.carrusel__puntos button[aria-current="true"]{background:var(--azul)}
+.proyecto__video p{margin:0;color:#fff;font-size:calc(58 / 1781 * 100cqw)}
+.proyecto__pie{display:flex;align-items:flex-end;justify-content:space-between;margin-top:calc(var(--u) * 128);padding-right:calc(var(--u) * 135)}
+.proyecto__equipo{font-size:calc(var(--u) * 24);line-height:calc(var(--u) * 24)}
+.proyecto__equipo p{margin:0}
+.proyecto__equipo p+p{margin-top:calc(var(--u) * 24)}
+.btn-sig{
+  display:flex;align-items:center;gap:calc(var(--u) * 20);width:max-content;margin:0 0 0 auto;
+  padding:calc(var(--u) * 16) calc(var(--u) * 32) calc(var(--u) * 18) calc(var(--u) * 30);
+  border:calc(var(--u) * 2.5) solid var(--azul);border-radius:calc(var(--u) * 99);
+  color:var(--azul);text-decoration:none;font-size:calc(var(--u) * 36);line-height:calc(var(--u) * 38);white-space:nowrap;
+  transition:background .25s,color .25s,opacity .9s ease;
+}
+.btn-sig svg{width:calc(var(--u) * 40);height:calc(var(--u) * 24)}
+.btn-sig:hover{background:var(--azul);color:var(--blanco)}
+.view--proyecto.is-active .proyecto__galeria > *{animation:img-in .65s cubic-bezier(.22,1,.36,1) both}
+.view--proyecto.is-active .proyecto__galeria > :nth-child(2){animation-delay:.08s}
+.view--proyecto.is-active .proyecto__galeria > :nth-child(3){animation-delay:.16s}
+@keyframes img-in{from{opacity:0;transform:translateY(calc(var(--u) * 16))}to{opacity:1;transform:none}}
+.proyecto__cab,.proyecto__galeria > *,.proyecto__pie{transition:opacity .45s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.2,.8,.2,1)}
+.view--proyecto .proyecto__galeria > .proyecto__pieza{transition-delay:.12s}
+.view--proyecto .proyecto__pie{transition-delay:.2s}
+.view--proyecto.from-cover.is-active{animation:none}
+.view--proyecto.from-cover .proyecto__galeria > *{animation:none}
+.view--proyecto.hold-hero .proyecto__hero{opacity:0}
+.view--proyecto.hold-rest .proyecto__cab,
+.view--proyecto.hold-rest .proyecto__pieza,
+.view--proyecto.hold-rest .proyecto__pie{opacity:0;transform:translateY(calc(var(--u) * 28))}
+.view--proyecto.hold-rest .proyecto__cab{transform:translateY(calc(var(--u) * -14))}
+
+/* ================= MÓVIL / TABLET ================= */
+@media (max-width:900px){
+  :root{--u:calc(100vw / 1100)}
+  .nav{height:56px;padding:0 20px;font-size:15px;line-height:20px}
+  .nav__links{gap:18px}
+  .footer{height:60px;justify-content:center;padding:0 20px}
+  .social a{width:31px;height:31px}.social{gap:30px}
+
+  /* inicio */
+  .view--intro.is-active{height:100vh}
+  .intro__text{left:22px;right:22px;bottom:auto;top:110px;font-size:20px;line-height:26px}
+  .intro__umbrella{left:auto;right:6vw;width:30vw;height:calc(30vw * 2.98)}
+  .azul__umbrella{left:auto;right:-6vw;top:auto;bottom:-6vh;width:96vw;height:auto}
+
+  /* trabajos */
+  .trabajos__wrap{padding:96px 20px 56px}
+  .trabajos__wrap .h1{margin-bottom:28px}
+  .view--trabajos .grid{grid-template-columns:1fr;row-gap:20px;margin:0}
+  .h1{font-size:38px;line-height:46px}
+
+  /* sobre mí */
+  .view--sobre.is-active{min-height:0;padding:96px 22px 60px}
+  .sobre__foto,.sobre__texto,.sobre__dibujo{position:relative;left:auto;top:auto}
+  .sobre__foto{width:100%;height:auto;aspect-ratio:649/738;max-width:420px;margin:0 auto 28px}
+  .sobre__foto figcaption{left:50%;top:50%;font-size:13px}
+  .sobre__texto{width:auto}
+  .sobre__texto p{font-size:16px;line-height:23px;margin-bottom:18px}
+  .sobre__dibujo{display:none}
+
+  /* contacto */
+  .view--contacto.is-active{min-height:0;height:auto;padding:90px 0 0}
+  .contacto__col{position:relative;left:auto;top:auto;padding:0 22px}
+  .contacto__sub{font-size:14px;line-height:18px;width:auto;margin-top:4px}
+  .pills--col{margin-top:16px}.pills--col li{margin-bottom:10px}
+  .pill{font-size:14px;line-height:18px;padding:6px 14px;border-width:2px}
+  .contacto__stage{position:relative;inset:auto;height:calc(var(--u) * 1180);margin-top:20px}
+  .env-wrap{left:calc(var(--u) * 14);top:calc(var(--u) * 30)}
+  .contacto__envio{position:absolute;right:calc(var(--u) * 59);bottom:calc(var(--u) * 24);z-index:6}
+  .btn-enviar{height:48px;font-size:20px;line-height:44px;border-width:2px}
+  .err{font-size:13px;line-height:16px}
+
+  /* proyecto */
+  .view--proyecto.is-active{display:block;padding:96px 20px 56px}
+  .proyecto__cab{display:block}
+  .view--proyecto .h1{font-size:38px;line-height:46px}
+  .proyecto__premio{left:auto;right:0;top:-10px;width:64px}
+  .proyecto__izq .gris{font-size:14px;line-height:20px;margin-top:6px}
+  .pills--row{gap:0 6px;margin-top:14px}.pills--row .pill{font-size:12px;line-height:16px;padding:4px 10px;margin-bottom:8px;border-width:2px}
+  .proyecto__texto{padding-top:18px;padding-right:6px;max-width:100%}
+  .proyecto__texto p{font-size:14px;line-height:19px}
+  .proyecto__texto p+p{margin-top:14px}
+  .proyecto__texto p{white-space:normal;overflow-wrap:break-word;word-break:break-word}
+  .proyecto__texto br{display:none}
+  .proyecto__galeria{width:100%;margin:28px 0 0}
+  .proyecto__pie{margin-top:32px;padding-right:0;gap:20px;flex-wrap:wrap}
+  .proyecto__equipo{font-size:13px;line-height:17px}
+  .proyecto__equipo p+p{margin-top:10px}
+  .btn-sig{font-size:15px;line-height:18px;padding:10px 18px;gap:12px;border-width:2px}.btn-sig svg{width:24px;height:16px}
+}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+
+:root{color-scheme:light}
+</style>
+</head>
+<body class="is-intro">
+
+  <a class="skip" href="#app">Saltar al contenido</a>
+
+  <!-- ============ BARRA SUPERIOR ============ -->
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="#">pulponalua</a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#trabajos" data-nav="trabajos">trabajos</a>
+      <a href="#sobre-mi" data-nav="sobre-mi">sobre mi</a>
+      <a href="#contacto" data-nav="contacto">contacto</a>
+    </nav>
+  </header>
+
+  <main id="app">
+
+    <!-- ============ PRINCIPAL (inicio) ============ -->
+    <section class="view view--intro" id="view-intro" data-view="">
+      <p class="intro__text">
+        Hola! Soy Flavia, pero me<br>
+        hago conocer por el nombre<br>
+        de pulponalua.<br>
+        <br>
+        Agarra un paraguas y espera<br>
+        a sumergirte...
+      </p>
+      <button class="intro__umbrella" id="umbrella" type="button" aria-label="Abrir el paraguas y empezar">
+        <img src="assets/paraguas-cerrado.svg" alt="" width="221" height="660">
+      </button>
+    </section>
+
+    <!-- ============ TRABAJOS ============ -->
+    <section class="view view--trabajos" id="view-trabajos" data-view="trabajos">
+      <div class="trabajos__wrap">
+        <h1 class="h1">trabajos</h1>
+        <div class="grid">
+
+          <a class="cover" id="cover-dobraondas" data-proyecto="dobraondas" href="#dobraondas" aria-label="Dobraondas, marca y campaña. Dirección de arte">
+            <div class="co-marco">
+              <div class="co-foto"></div>
+
+              <div class="co-capa co-izq co-papel"></div>
+              <div class="co-capa co-izq co-papel-luz"></div>
+              <div class="co-capa co-izq co-cinta"></div>
+              <div class="co-capa co-izq co-sombra"></div>
+
+              <div class="co-capa co-der co-papel"></div>
+              <div class="co-capa co-der co-papel-luz"></div>
+              <div class="co-capa co-der co-cinta"></div>
+              <div class="co-capa co-der co-sombra"></div>
+
+              <img class="co-logo-2024" src="assets/obra-logo-2024.svg" alt="">
+
+              <div class="co-tarjeta">
+                <h2 class="co-t-titulo">DOBRAONDAS</h2>
+                <p class="co-t-texto">Marca y campaña de<br>publicidad orientada a<br>la concienciación de la<br>contaminación del mar.</p>
+                <p class="co-t-pie">DIRECCIÓN DE ARTE · EQUIPO</p>
+              </div>
+
+              <img class="co-logo-a" src="assets/obra-logo-a.svg" alt="">
+            </div>
+          </a>
+
+          <div class="cover-slot">
+            <a class="cover" id="cover-gally" data-proyecto="gally" href="#gally" aria-label="Gally. Dirección de arte">
+              <div class="co-marco">
+                <div class="co-foto"></div>
+
+                <div class="co-capa co-izq co-papel"></div>
+                <div class="co-capa co-izq co-papel-luz"></div>
+                <div class="co-capa co-izq co-cinta"></div>
+                <div class="co-capa co-izq co-sombra"></div>
+
+                <div class="co-capa co-der co-papel"></div>
+                <div class="co-capa co-der co-papel-luz"></div>
+                <div class="co-capa co-der co-cinta"></div>
+                <div class="co-capa co-der co-sombra"></div>
+
+                <img class="co-logo-2024" src="assets/logo-gally-ano.svg" alt="">
+
+                <div class="co-tarjeta">
+                  <h2 class="co-t-titulo">GALLY</h2>
+                  <p class="co-t-texto">Rediseño del personaje<br>Gally, su marca<br>asociada y el Libro<br>Blanco de Accesibilidad<br>para Desarrolladores.</p>
+                  <p class="co-t-pie">DIRECCIÓN DE ARTE · EQUIPO</p>
+                </div>
+
+                <img class="co-logo-a" src="assets/logo-gally-icono.svg" alt="" style="--ix:586.0;--iy:180.25;--iw:101.75">
+              </div>
+            </a>
+            <img class="co-premio" src="assets/premio.svg" alt="Premio">
+          </div>
+          <a class="cover" id="cover-fake" data-proyecto="fake" href="#fake" aria-label="Fake. Dirección de arte">
+            <div class="co-marco">
+              <div class="co-foto"></div>
+
+              <div class="co-capa co-izq co-papel"></div>
+              <div class="co-capa co-izq co-papel-luz"></div>
+              <div class="co-capa co-izq co-cinta"></div>
+              <div class="co-capa co-izq co-sombra"></div>
+
+              <div class="co-capa co-der co-papel"></div>
+              <div class="co-capa co-der co-papel-luz"></div>
+              <div class="co-capa co-der co-cinta"></div>
+              <div class="co-capa co-der co-sombra"></div>
+
+              <img class="co-logo-2024" src="assets/logo-fake-ano.svg" alt="">
+
+              <div class="co-tarjeta">
+                <h2 class="co-t-titulo">FAKE</h2>
+                <p class="co-t-texto">Fake es un perfume que<br>no tiene nada en su<br>interior, es frágil,<br>de papel, de aire.</p>
+                <p class="co-t-pie">DIRECCIÓN DE ARTE · SOLO</p>
+              </div>
+
+              <img class="co-logo-a" src="assets/logo-fake-icono.svg" alt="" style="--ix:592.0;--iy:185.0;--iw:86.5">
+            </div>
+          </a>
+          <a class="cover" id="cover-ella-es-mayor" data-proyecto="ella-es-mayor" href="#ella-es-mayor" aria-label="Ella es mayor. Fotografía">
+            <div class="co-marco">
+              <div class="co-foto"></div>
+
+              <div class="co-capa co-izq co-papel"></div>
+              <div class="co-capa co-izq co-papel-luz"></div>
+              <div class="co-capa co-izq co-cinta"></div>
+              <div class="co-capa co-izq co-sombra"></div>
+
+              <div class="co-capa co-der co-papel"></div>
+              <div class="co-capa co-der co-papel-luz"></div>
+              <div class="co-capa co-der co-cinta"></div>
+              <div class="co-capa co-der co-sombra"></div>
+
+              <img class="co-logo-2024" src="assets/logo-ella-ano.svg" alt="">
+
+              <div class="co-tarjeta co-tarjeta--2l">
+                <h2 class="co-t-titulo">ELLA ES<br>MAYOR</h2>
+                <p class="co-t-texto">Una colección de fotos<br>de retrata puntos de<br>vista, relaciones y más.</p>
+                <p class="co-t-pie">FOTOGRAFÍA · SOLO</p>
+              </div>
+
+              <img class="co-logo-a" src="assets/logo-ella-icono.svg" alt="" style="--ix:591.5;--iy:179.75;--iw:86.75">
+            </div>
+          </a>
+          <a class="cover" id="cover-cuarto-lugar" data-proyecto="cuarto-lugar" href="#cuarto-lugar" aria-label="Cuarto lugar. Dirección de arte">
+            <div class="co-marco">
+              <div class="co-foto"></div>
+
+              <div class="co-capa co-izq co-papel"></div>
+              <div class="co-capa co-izq co-papel-luz"></div>
+              <div class="co-capa co-izq co-cinta"></div>
+              <div class="co-capa co-izq co-sombra"></div>
+
+              <div class="co-capa co-der co-papel"></div>
+              <div class="co-capa co-der co-papel-luz"></div>
+              <div class="co-capa co-der co-cinta"></div>
+              <div class="co-capa co-der co-sombra"></div>
+
+              <img class="co-logo-2024" src="assets/logo-cuarto-ano.svg" alt="">
+
+              <div class="co-tarjeta co-tarjeta--2l">
+                <h2 class="co-t-titulo">CUARTO<br>LUGAR</h2>
+                <p class="co-t-texto">Branding e identidad<br>gráfica de un evento que<br>explora la desconexión<br>emocional y social<br>provocada por la<br>hiperconectividad digital.</p>
+                <p class="co-t-pie">DIRECCIÓN DE ARTE· EQUIPO</p>
+              </div>
+
+              <img class="co-logo-a" src="assets/logo-cuarto-icono.svg" alt="" style="--ix:591.5;--iy:185.0;--iw:86.75">
+            </div>
+          </a>
+          <a class="cover" id="cover-huevo" data-proyecto="huevo" href="#huevo" aria-label="Huevo. Motion graphics">
+            <div class="co-marco">
+              <div class="co-foto"></div>
+
+              <div class="co-capa co-izq co-papel"></div>
+              <div class="co-capa co-izq co-papel-luz"></div>
+              <div class="co-capa co-izq co-cinta"></div>
+              <div class="co-capa co-izq co-sombra"></div>
+
+              <div class="co-capa co-der co-papel"></div>
+              <div class="co-capa co-der co-papel-luz"></div>
+              <div class="co-capa co-der co-cinta"></div>
+              <div class="co-capa co-der co-sombra"></div>
+
+              <img class="co-logo-2024" src="assets/logo-huevo-ano.svg" alt="">
+
+              <div class="co-tarjeta">
+                <h2 class="co-t-titulo">HUEVO</h2>
+                <p class="co-t-texto">Ideación de una<br>cortinilla inspirándome<br>en el Canal Cocina.</p>
+                <p class="co-t-pie">MOTION GRAPHICS · SOLO</p>
+              </div>
+
+              <img class="co-logo-a" src="assets/logo-huevo-icono.svg" alt="" style="--ix:591.5;--iy:185.25;--iw:90.5">
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SOBRE MI ============ -->
+    <section class="view view--sobre" id="view-sobre" data-view="sobre-mi">
+      <figure class="sobre__foto">
+        <img src="assets/retrato.jpg" alt="Retrato de Flavia Alonso" width="1100" height="1251">
+        <figcaption>Esta soy yo...</figcaption>
+      </figure>
+      <div class="sobre__texto">
+        <h1 class="h1">sobre mi</h1>
+        <p>...y esto es un poco sobre quién soy. Me llamo Flavia, y mi nombre artístico es pulponalua.</p>
+        <p>Vengo de Vigo, Galicia, pero actualmente resido en Madrid. Me considero un perfil creativo multidisciplinar en busca de ideas nuevas y, cuando haga falta, arriesgadas.</p>
+        <p>Estoy en el último año de un grado en diseño digital en la U-tad e hice mis prácticas en Illion Studios.</p>
+        <p>Si quieres saber más sobre mi, puedes ver mis <a href="#trabajos">trabajos</a> o <a href="#contacto">contactar conmigo</a>.</p>
+      </div>
+      <svg class="sobre__dibujo" id="sobre-dibujo" viewBox="0 0 384 690" aria-hidden="true" focusable="false" style="overflow:visible"><g fill="none" stroke="#0000FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path stroke-dasharray="1162 1162" stroke-dashoffset="1162" d="M -10 577 C 60 592, 200 590, 280 530 C 345 480, 362 380, 360 300 C 358 200, 320 100, 250 97 C 200 95, 165 150, 168 185 C 170 200, 178 202, 190 198 C 250 185, 298 130, 302 60"><animate id="trazo" attributeName="stroke-dashoffset" values="1162;0;0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0.65 0 0.35 1;0 0 1 1" dur="2s" begin="0s;trazo.end+8s" fill="freeze"/></path><path stroke-dasharray="24 24" stroke-dashoffset="24" d="M 302 60 L 287 78"><animate attributeName="stroke-dashoffset" values="24;24;0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.33 1 0.68 1" dur="2s" begin="0s;trazo.end+8s" fill="freeze"/></path><path stroke-dasharray="24 24" stroke-dashoffset="24" d="M 302 60 L 316 78"><animate attributeName="stroke-dashoffset" values="24;24;0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.33 1 0.68 1" dur="2s" begin="0s;trazo.end+8s" fill="freeze"/></path></g></svg>
+    </section>
+
+    <!-- ============ CONTACTO ============ -->
+    <section class="view view--contacto" id="view-contacto" data-view="contacto">
+      <div class="contacto__col">
+        <h1 class="h1">contacto</h1>
+        <p class="contacto__sub">Contacta conmigo como prefieras...</p>
+        <ul class="pills pills--col">
+          <li><a class="pill" data-link="email" href="mailto:flaviaalonsomacia@gmail.com">flaviaalonsomacia@gmail.com</a></li>
+          <li><a class="pill" data-link="instagram" href="https://www.instagram.com/pulponalua/" target="_blank" rel="noopener">@pulponalua</a></li>
+          <li><a class="pill" data-link="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin</a></li>
+        </ul>
+      </div>
+
+      <div class="contacto__stage" id="env-stage">
+        <div class="env-wrap" id="env-wrap">
+          <!-- piezas detrás de la carta: fondo del sobre + solapa abierta -->
+          <svg class="env__back" viewBox="0 0 1072 1291" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <pattern id="sobre-tex" patternUnits="userSpaceOnUse" x="-100" y="-22.8" width="1300" height="867">
+                <image href="assets/sobre-papel.jpg" width="1300" height="867"/>
+              </pattern>
+            </defs>
+            <g transform="translate(0,537.2)">
+              <path class="pieza" d="M30,753 C13.4,753 0,739.6 0,723 L0,0 L1071.3,0 L1071.3,723 C1071.3,739.6 1057.9,753 1041.3,753 Z"/>
+              <path class="textura" fill="url(#sobre-tex)" d="M30,753 C13.4,753 0,739.6 0,723 L0,0 L1071.3,0 L1071.3,723 C1071.3,739.6 1057.9,753 1041.3,753 Z"/>
+              <g class="env__solapa env__solapa--atras" id="solapa-atras">
+                <path class="pieza" d="M1071.3,33.5 L0,33.5 L0,0 L110.8,-513.7 C113.8,-527.5 126,-537.2 140.1,-537.2 L931.1,-537.2 C945.3,-537.2 957.5,-527.5 960.5,-513.7 L1071.3,0 Z"/>
+                <path class="textura" fill="url(#sobre-tex)" d="M1071.3,33.5 L0,33.5 L0,0 L110.8,-513.7 C113.8,-527.5 126,-537.2 140.1,-537.2 L931.1,-537.2 C945.3,-537.2 957.5,-527.5 960.5,-513.7 L1071.3,0 Z"/>
+              </g>
+            </g>
+          </svg>
+
+          <div class="card__sombra" id="card-sombra" aria-hidden="true"></div>
+
+          <form class="card" id="form-contacto" novalidate autocomplete="on">
+            <h2 class="card__hola">Hola!</h2>
+            <input class="field field--email" type="email" name="email" id="f-email" placeholder="EMAIL" aria-label="Email" autocomplete="email" required>
+            <input class="field field--asunto" type="text" name="asunto" id="f-asunto" placeholder="ASUNTO" aria-label="Asunto" maxlength="120" autocomplete="off" required>
+            <textarea class="field field--nota" name="nota" id="f-nota" placeholder="NOTA" aria-label="Nota" required></textarea>
+            <p class="err err--email" id="err-email" role="alert"></p>
+            <p class="err err--asunto" id="err-asunto" role="alert"></p>
+            <p class="err err--nota" id="err-nota" role="alert"></p>
+            <p class="err err--form" id="form-msg" role="status" aria-live="polite"></p>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          </form>
+
+          <!-- piezas delante de la carta: laterales, base y solapa cerrada -->
+          <svg class="env__front" viewBox="0 0 1072 1291" preserveAspectRatio="none" aria-hidden="true">
+            <g transform="translate(0,537.2)">
+              <path class="pieza" d="M184.5,753 L30,753 C13.4,753 0,739.6 0,723 L0,0 L198.3,107.1 C208,112.4 214.1,122.5 214.1,133.5 L214.1,723 C214.1,739.6 200.6,753 184.5,753 Z"/>
+              <path class="textura" fill="url(#sobre-tex)" d="M184.5,753 L30,753 C13.4,753 0,739.6 0,723 L0,0 L198.3,107.1 C208,112.4 214.1,122.5 214.1,133.5 L214.1,723 C214.1,739.6 200.6,753 184.5,753 Z"/>
+              <path class="pieza" d="M887.6,753 L1041.3,753 C1057.9,753 1071.3,739.6 1071.3,723 L1071.3,0 L873,107.1 C863.3,112.4 857.2,122.5 857.2,133.5 L857.2,723 C857.2,739.6 870.6,753 887.6,753 Z"/>
+              <path class="textura" fill="url(#sobre-tex)" d="M887.6,753 L1041.3,753 C1057.9,753 1071.3,739.6 1071.3,723 L1071.3,0 L873,107.1 C863.3,112.4 857.2,122.5 857.2,133.5 L857.2,723 C857.2,739.6 870.6,753 887.6,753 Z"/>
+              <path class="pieza" d="M1035.1,753 L36.1,753 C17.4,753 3.2,736 6.7,717.5 L97.9,234.1 C100.5,220 112.9,209.7 127.3,209.7 L944.3,209.7 C958.7,209.7 971.1,220 973.7,234.2 L1064.6,717.5 C1068.1,736 1053.9,753 1035.1,753 Z"/>
+              <path class="textura" fill="url(#sobre-tex)" d="M1035.1,753 L36.1,753 C17.4,753 3.2,736 6.7,717.5 L97.9,234.1 C100.5,220 112.9,209.7 127.3,209.7 L944.3,209.7 C958.7,209.7 971.1,220 973.7,234.2 L1064.6,717.5 C1068.1,736 1053.9,753 1035.1,753 Z"/>
+              <g class="env__solapa env__solapa--delante" id="solapa-delante">
+                <path class="pieza" d="M1071.3,33.5 L0,33.5 L0,0 L110.8,-513.7 C113.8,-527.5 126,-537.2 140.1,-537.2 L931.1,-537.2 C945.3,-537.2 957.5,-527.5 960.5,-513.7 L1071.3,0 Z"/>
+                <path class="textura" fill="url(#sobre-tex)" d="M1071.3,33.5 L0,33.5 L0,0 L110.8,-513.7 C113.8,-527.5 126,-537.2 140.1,-537.2 L931.1,-537.2 C945.3,-537.2 957.5,-527.5 960.5,-513.7 L1071.3,0 Z"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="contacto__envio">
+        <button class="btn-enviar" id="btn-enviar" type="submit" form="form-contacto">enviar</button>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTO: DOBRAONDAS ============ -->
+    <section class="view view--proyecto" id="view-dobraondas" data-view="dobraondas">
+      <div class="proyecto__cab">
+        <div class="proyecto__izq">
+          <h1 class="h1">dobraondas</h1>
+          <p class="gris">DIRECCIÓN DE ARTE<br>2024</p>
+          <ul class="pills pills--row">
+            <li class="pill">DISEÑO DE MARCA</li>
+            <li class="pill">PACKAGING</li>
+            <li class="pills__salto" aria-hidden="true"></li>
+            <li class="pill">ILUSTRACIÓN</li>
+            <li class="pill">MOTION GRAPHICS</li>
+          </ul>
+        </div>
+        <div class="proyecto__texto">
+          <p>Dobraondas es una marca que busca concienciar sobre el daño que causa el petróleo en el mar, especialmente en las costas españolas.</p>
+          <p>La iniciativa pretende involuclar al espectador de manera activa, haciendo que este se divierta con el producto a la vez que se empapa de la problemática.</p>
+          <p>Este proyecto fue seleccionado para enseñarlo y testearlo en Madrid es Ciencia. Fue muy bien acogido por niños, padres e incluso profesores, que encontraron el taller como algo divertido y didáctico al mismo tiempo.</p>
+        </div>
+      </div>
+      <div class="proyecto__galeria">
+        <img class="proyecto__img proyecto__hero" src="assets/dobraondas-galeria-1.jpg" alt="Figura de papel azul plegada sobre fondo rojo con manchas negras" width="2672" height="1125">
+        <div class="proyecto__pieza proyecto__bloque" style="--h:1794">
+          <img src="assets/dobraondas-galeria-2.jpg" alt="Logotipo de Dobraondas, figuras de papel plegado e iconos de la marca" width="2672" height="2692" loading="lazy">
+          <div class="proyecto__nota" style="--l:1091.5;--t:630">
+            <p>En la experiencia que incorporaba esta marca, se le<br>daba a los niños una caja con el papel para hacer<br>la figura, las instrucciones en forma de barquito y<br>algunos recortes de “chapapote”.</p>
+            <p>Una vez acababan de hacer la figura, se les guiába<br>a escanear un código QR que mostraba una animación<br>de la figura realizada en RA.</p>
+          </div>
+        </div>
+        <div class="proyecto__pieza proyecto__video proyecto__video--nativo" style="aspect-ratio:1781 / 1001.5"><video class="video-auto" src="assets/dobraondas-video.mp4" playsinline loop preload="metadata" aria-label="Vídeo de Dobraondas"></video></div>
+      </div>
+      <div class="proyecto__pie">
+        <div class="proyecto__equipo gris">
+          <p>EQUIPO DEL PROYECTO</p>
+          <p>Flavia Alonso<br>Marina Mesa<br>Rocío Andrade<br>Gloria Sarmiento</p>
+        </div>
+        <a class="btn-sig" href="#gally">SIGUIENTE PROYECTO
+          <svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true"><path d="M2 12H37M27 2l10 10-10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTO: GALLY ============ -->
+    <section class="view view--proyecto" id="view-gally" data-view="gally">
+      <div class="proyecto__cab">
+        <div class="proyecto__izq">
+          <h1 class="h1">gally</h1>
+          <img class="proyecto__premio" src="assets/premio.svg" alt="Premio">
+          <p class="gris">DIRECCIÓN DE ARTE<br>2026</p>
+          <ul class="pills pills--row">
+            <li class="pill">DISEÑO DE MARCA</li>
+            <li class="pill">ICONOGRAFÍA</li>
+            <li class="pills__salto" aria-hidden="true"></li>
+            <li class="pill">ILUSTRACIÓN</li>
+            <li class="pill">MOTION GRAPHICS</li>
+            <li class="pill">DISEÑO DE PERSONAJES</li>
+          </ul>
+        </div>
+        <div class="proyecto__texto">
+          <p>Rediseño del personaje Gally, su marca asociada y el Libro Blanco de Accesibilidad para Desarrolladores para la ONCE.</p>
+          <p>Esta primera propuesta ganó el concunso propuesto por la ONCE, que nos permitió posteriormente hacer un cortometraje explicativo sobre qué es la iniciativa Gally.</p>
+          <p>Habrá avances del proyecto muy pronto...</p>
+        </div>
+      </div>
+      <div class="proyecto__galeria">
+        <img class="proyecto__img proyecto__hero" src="assets/gally-galeria-1.jpg" alt="Personaje Gally y personajes secundarios, libro blanco, cartel e iconografía del proyecto" width="2672" height="3129">
+      </div>
+      <div class="proyecto__pie">
+        <div class="proyecto__equipo gris">
+          <p>EQUIPO DEL PROYECTO</p>
+          <p>Flavia Alonso<br>Sofía Carbonell</p>
+        </div>
+        <a class="btn-sig" href="#fake">SIGUIENTE PROYECTO
+          <svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true"><path d="M2 12H37M27 2l10 10-10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTO: FAKE ============ -->
+    <section class="view view--proyecto" id="view-fake" data-view="fake">
+      <div class="proyecto__cab">
+        <div class="proyecto__izq">
+          <h1 class="h1">fake</h1>
+          <p class="gris">DIRECCIÓN DE ARTE<br>2025</p>
+          <ul class="pills pills--row">
+            <li class="pill">DISEÑO DE MARCA</li>
+            <li class="pill">PACKAGING</li>
+            <li class="pills__salto" aria-hidden="true"></li>
+            <li class="pill">ILUSTRACIÓN</li>
+            <li class="pill">FOTOGRAFÍA</li>
+          </ul>
+        </div>
+        <div class="proyecto__texto">
+          <p>Fake es un perfume que no tiene nada en su interior, es frágil, de papel, de aire.</p>
+          <p>La campaña señala directamente a la industria de los cosméticos y juega conscientemente con las percepciones del espectador. A través de la ausencia, cuestiona las promesas de lujo y perfección de la publicidad, evidenciando lo superficial y lo construido de ciertos discursos de marca.</p>
+        </div>
+      </div>
+      <div class="proyecto__galeria">
+        <img class="proyecto__img proyecto__hero" src="assets/fake-galeria-1.jpg" alt="Bolsa de papel arrugada con el logotipo FAKE" width="2672" height="1138">
+        <img class="proyecto__pieza" src="assets/fake-galeria-2.jpg" alt="Revistas, cartel, packaging, bolsa y catálogo de la campaña FAKE" width="2672" height="4463" loading="lazy">
+      </div>
+      <div class="proyecto__pie">
+        <a class="btn-sig" href="#ella-es-mayor">SIGUIENTE PROYECTO
+          <svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true"><path d="M2 12H37M27 2l10 10-10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTO: ELLA ES MAYOR ============ -->
+    <section class="view view--proyecto" id="view-ella-es-mayor" data-view="ella-es-mayor">
+      <div class="proyecto__cab">
+        <div class="proyecto__izq">
+          <h1 class="h1">ella es mayor</h1>
+          <p class="gris">FOTOGRAFÍA<br>2024</p>
+          <ul class="pills pills--row">
+            <li class="pill">MAQUETACIÓN</li>
+            <li class="pill">FOTOGRAFÍA</li>
+          </ul>
+        </div>
+        <div class="proyecto__texto">
+          <p>El proyecto “Ella es mayor”, es una colección de fotos donde retrato la relación que tengo con mi abuela a través de nuestras similitudes y diferencias a causa de la educación, la edad y los valores.</p>
+        </div>
+      </div>
+      <div class="proyecto__galeria">
+        <img class="proyecto__img proyecto__hero" src="assets/ella-galeria-1.jpg" alt="Libro “Ella es mayor” con fotografía de unas manos" width="2672" height="1673">
+        <div class="proyecto__pieza proyecto__bloque" style="--h:1473.5">
+          <img src="assets/ella-galeria-2.jpg" alt="Páginas interiores del libro “Ella es mayor”" width="2672" height="2210" loading="lazy">
+          <div class="proyecto__nota" style="--l:1133.2;--t:377.7">
+            <p>“Antes de nada, pongamos nombre a<br>mi abuela, ella es Tita, Matilde,<br>Matildita, Mamá, Abuela o<br>Bisabuela. En todos estos casos<br>existe una brecha generacional,<br>pero yo soy el ser consciente con<br>la mayor brecha respecto a ella.”</p>
+          </div>
+          <div class="proyecto__nota" style="--l:153;--t:1052.3">
+            <p>“Me di cuenta de que ya no estaba cerca<br>del mar ni de nada conocido, era algo<br>emocionante, pero después de un tiempo<br>empezó a ser algo a lo que añorar, un<br>conflicto entre lo nuevo y lo viejo. Sin<br>embargo, en vez de seguir dándole<br>vueltas a un sentimiento que sabía que<br>iba a perdurar, preferí verlo desde otro<br>punto de vista, desde el de mi abuela.”</p>
+          </div>
+        </div>
+        <div class="proyecto__pieza carrusel" style="aspect-ratio:1781 / 1364.5;margin-top:calc(var(--u) * 108.5)" role="region" aria-roledescription="carrusel" aria-label="Fotos del libro “Ella es mayor”">
+          <div class="carrusel__pista" tabindex="0">
+            <figure class="carrusel__foto"><img src="assets/ella-carrusel-1.jpg" alt="Libro abierto: manos de la abuela cosiendo y manos jóvenes con un ratón. “Una mano vieja”" width="2000" height="1500" loading="lazy" draggable="false"></figure>
+            <figure class="carrusel__foto"><img src="assets/ella-carrusel-2.jpg" alt="Libro abierto: flores en un jarrón de cristal y flores de piezas de construcción. “Algo que no se huele”" width="2000" height="1500" loading="lazy" draggable="false"></figure>
+            <figure class="carrusel__foto"><img src="assets/ella-carrusel-3.jpg" alt="Libro abierto: tejados de día y una calle de noche. “Las vistas del salón”" width="2000" height="1500" loading="lazy" draggable="false"></figure>
+            <figure class="carrusel__foto"><img src="assets/ella-carrusel-4.jpg" alt="Libro abierto: dos mesillas de noche. “Retrato de buenas noches”" width="2000" height="1500" loading="lazy" draggable="false"></figure>
+            <figure class="carrusel__foto"><img src="assets/ella-carrusel-5.jpg" alt="Libro abierto: retrato de la abuela y retrato de la nieta. “Ella es mayor”" width="2000" height="1500" loading="lazy" draggable="false"></figure>
+            <figure class="carrusel__foto"><img src="assets/ella-carrusel-6.jpg" alt="Contraportada roja del libro “Ella es mayor”" width="2000" height="1500" loading="lazy" draggable="false"></figure>
+          </div>
+          <button class="carrusel__btn carrusel__btn--ant" type="button" aria-label="Foto anterior"><svg viewBox="0 0 40 24" aria-hidden="true"><path d="M38 12H3M13 2L3 12l10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="carrusel__btn carrusel__btn--sig" type="button" aria-label="Foto siguiente"><svg viewBox="0 0 40 24" aria-hidden="true"><path d="M2 12H37M27 2l10 10-10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="carrusel__puntos"><button type="button" aria-label="Foto 1"></button><button type="button" aria-label="Foto 2"></button><button type="button" aria-label="Foto 3"></button><button type="button" aria-label="Foto 4"></button><button type="button" aria-label="Foto 5"></button><button type="button" aria-label="Foto 6"></button></div>
+        </div>
+      </div>
+      <div class="proyecto__pie">
+        <a class="btn-sig" href="#cuarto-lugar">SIGUIENTE PROYECTO
+          <svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true"><path d="M2 12H37M27 2l10 10-10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTO: CUARTO LUGAR ============ -->
+    <section class="view view--proyecto" id="view-cuarto-lugar" data-view="cuarto-lugar">
+      <div class="proyecto__cab">
+        <div class="proyecto__izq">
+          <h1 class="h1">cuarto lugar</h1>
+          <p class="gris">DIRECCIÓN DE ARTE<br>2025</p>
+          <ul class="pills pills--row">
+            <li class="pill">DISEÑO DE MARCA</li>
+            <li class="pill">MOTION GRAPHICS</li>
+            <li class="pills__salto" aria-hidden="true"></li>
+            <li class="pill">IA GENERATIVA</li>
+          </ul>
+        </div>
+        <div class="proyecto__texto">
+          <p>Branding e identidad gráfica de un evento que explora la desconexión emocional y social provocada por la hiperconectividad digital. Es una experiencia inmersiva que se desarrolla a través de un recorrido que combina arte instalativo con realidad aumentada, donde el espectador atraviesa distintas salas y, en cada una, puede utilizar su móvil para mirar a su alrededor y descubrir que no está solo.</p>
+          <p>La idea es mostrar cómo, a veces, pasamos tanto tiempo frente a las pantallas que nos olvidamos de sentir y de mirar el mundo real. Al final del recorrido, las personas deben decidir si quieren volver al mundo real o quedarse dentro de ese mundo digital.</p>
+        </div>
+      </div>
+      <div class="proyecto__galeria">
+        <img class="proyecto__img proyecto__hero" src="assets/cuarto-galeria-1.jpg" alt="Puertas de metro con el texto “Donde los espacios están vacíos y los móviles llenos”" width="2672" height="1525">
+        <div class="proyecto__pieza proyecto__bloque" style="--h:4114">
+          <img src="assets/cuarto-galeria-2.jpg" alt="Identidad de Cuarto Lugar: logotipo, señalética, carteles y lona" width="2672" height="6171" loading="lazy">
+          <div class="proyecto__caja proyecto__caja--video" style="--l:1037.5;--t:0.5;--cw:743.5;--ch:1343"><video class="video-auto" src="assets/cuarto-video-1.mp4" playsinline loop preload="metadata" aria-label="Vídeo del evento Cuarto Lugar"></video></div>
+          <div class="proyecto__caja proyecto__caja--video" style="--l:0;--t:2339.5;--cw:1037.5;--ch:1021"><video class="video-auto" src="assets/cuarto-video-2.mp4" playsinline loop preload="metadata" aria-label="Vídeo de Cuarto Lugar"></video></div>
+        </div>
+      </div>
+      <div class="proyecto__pie">
+        <div class="proyecto__equipo gris">
+          <p>EQUIPO DEL PROYECTO</p>
+          <p>Flavia Alonso<br>Alejandro Escartín</p>
+        </div>
+        <a class="btn-sig" href="#huevo">SIGUIENTE PROYECTO
+          <svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true"><path d="M2 12H37M27 2l10 10-10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ PROYECTO: HUEVO ============ -->
+    <section class="view view--proyecto" id="view-huevo" data-view="huevo">
+      <div class="proyecto__cab">
+        <div class="proyecto__izq">
+          <h1 class="h1">huevo</h1>
+          <p class="gris">MOTION GRAPHICS<br>2025</p>
+          <ul class="pills pills--row">
+            <li class="pill">DISEÑO DE MARCA</li>
+            <li class="pill">DISEÑO 3D</li>
+            <li class="pills__salto" aria-hidden="true"></li>
+            <li class="pill">ILUSTRACIÓN</li>
+            <li class="pill">MOTION GRAPHICS</li>
+          </ul>
+        </div>
+        <div class="proyecto__texto">
+          <p>Ideación de una cortinilla inspirándome en el Canal Cocina y rediseño o ajuste de logo y colores para la mejora de la pieza.</p>
+        </div>
+      </div>
+      <div class="proyecto__galeria">
+        <img class="proyecto__img proyecto__hero" src="assets/huevo-galeria-1.jpg" alt="Huevo translúcido con yema sobre fondo negro" width="2672" height="1423">
+        <img class="proyecto__pieza" src="assets/huevo-galeria-2.jpg" alt="Logotipo de Canal Cocina y valla publicitaria" width="2672" height="1958" loading="lazy">
+        <div class="proyecto__pieza proyecto__video proyecto__video--nativo" style="aspect-ratio:1781 / 1002"><video class="video-auto" src="assets/huevo-video.mp4" playsinline loop preload="metadata" aria-label="Vídeo del proyecto Huevo"></video></div>
+      </div>
+      <div class="proyecto__pie">
+        <a class="btn-sig" href="#dobraondas">SIGUIENTE PROYECTO
+          <svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true"><path d="M2 12H37M27 2l10 10-10 10" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ BARRA INFERIOR ============ -->
+  <footer class="footer" id="footer">
+    <ul class="social" aria-label="Redes sociales">
+      <li><a data-link="email" href="mailto:flaviaalonsomacia@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="9" width="40" height="30" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M6 13l18 15 18-15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+      <li><a data-link="instagram" href="https://www.instagram.com/pulponalua/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="5" width="38" height="38" rx="11" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="24" cy="24" r="9" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="35" cy="13" r="2.3" fill="currentColor"/></svg></a></li>
+      <li><a data-link="linkedin" href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="5" width="38" height="38" rx="6" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="15" cy="16" r="2.6" fill="currentColor"/><path d="M12.8 22h4.4v13h-4.4zM21 22h4.2v1.9c.9-1.4 2.5-2.3 4.6-2.3 4 0 5.2 2.5 5.2 6.2V35h-4.4v-6.2c0-1.7-.5-2.8-2.1-2.8-1.7 0-2.7 1.2-2.7 3V35H21z" fill="currentColor"/></svg></a></li>
+    </ul>
+  </footer>
+
+  <!-- ============ SECUENCIA DE INICIO (lluvia → inundación → paraguas) ============ -->
+  <div class="intro-stage" id="intro-stage" aria-hidden="true">
+    <div class="intro-stage__inner" id="intro-stage-inner">
+      <svg class="intro-stage__svg" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+        <defs><clipPath id="waterClip"><path id="waterClipPath" d=""/></clipPath></defs>
+        <g id="rain"></g>
+        <path id="waveFront" fill="#1313ea" d=""/>
+        <g id="umbrellaWrap">
+          <g fill="none" stroke="#fff" stroke-width="4" stroke-miterlimit="10">
+            <path d="M -0.00105 0.00024375 C -131.270581 55.070556 -226.020581 138.019775 -235.559644 200.312744 C -264.137769 64.133056 -191.676831 -78.30835 -56.622144 -134.968506 C 78.428637 -191.628663 230.830981 -143.519288 307.971606 -27.7146 C 256.8427 -64.554444 131.272387 -55.070069 -0.00105 0.00024375 Z" transform="matrix(1,0,0,-1,1421.2198,916.2854)"/>
+            <path d="M 0.0015 -0.00031875 C -26.389125 -62.902662 -173.166469 -61.289381 -327.84225 3.601244 C -482.514125 68.491869 -586.510219 172.085619 -560.119594 234.987963 C -533.732875 297.8864 -386.951625 296.277025 -232.27975 231.3864 C -77.607875 166.495775 26.388219 62.902025 0.0015 -0.00031875 Z" transform="matrix(1,0,0,-1,1749.061,919.8864)"/>
+            <path d="M -0.00095 0.00024375 L 172.709987 411.672119 C 181.526394 432.695556 205.7178 442.586181 226.741237 433.765869 C 247.760769 424.949462 257.651394 400.758056 248.834987 379.734619 L 230.756862 336.648681" transform="matrix(1,0,0,-1,1421.2197,916.2854)"/>
+            <path d="M -0.00100625 -0.00009375 L -11.200225 -26.699312" transform="matrix(1,0,0,-1,1364.8096,1050.746)"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <audio id="snd-enviado" src="assets/enviado.mp3" preload="auto"></audio>
+
+  <script>/* ============================================================
+   CONFIGURACIÓN — edita solo este archivo para cambiar datos
+   ============================================================ */
+window.PORTFOLIO = {
+  demo: true,
+  email: "flaviaalonsomacia@gmail.com",
+  instagram: "https://www.instagram.com/pulponalua/",
+  linkedin: "https://www.linkedin.com/in/flaviaalonsomacia",
+
+  // Servicio que reenvía el formulario a tu correo (sin backend).
+  // FormSubmit: la primera vez que alguien envíe un mensaje te llegará un
+  // correo de activación; confírmalo y desde entonces recibirás los mensajes.
+  formEndpoint: "https://formsubmit.co/ajax/flaviaalonsomacia@gmail.com",
+  formSubject: "Nuevo mensaje desde tu portfolio (pulponalua)"
+};
+</script>
+  <script>/* pulponalua · portfolio — comportamiento (sin dependencias) */
+(() => {
+  'use strict';
+  const CFG = window.PORTFOLIO || {};
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const EASE = 'cubic-bezier(.65,0,.25,1)';
+  const body = document.body;
+
+  /* ---------- enlaces configurables ---------- */
+  $$('[data-link="email"]').forEach((a) => (a.href = 'mailto:' + CFG.email));
+  $$('[data-link="instagram"]').forEach((a) => (a.href = CFG.instagram));
+  $$('[data-link="linkedin"]').forEach((a) => (a.href = CFG.linkedin));
+
+  /* ---------- elementos ---------- */
+  const views = Object.fromEntries($$('.view').map((v) => [v.dataset.view, v]));
+  const viewTrabajos = views['trabajos'];
+  const introStage = $('#intro-stage');
+  const nav = $('#nav');
+  const introStageInner = $('#intro-stage-inner');
+  const rain = $('#rain');
+  const waveFront = $('#waveFront');
+  const waterClipPath = $('#waterClipPath');
+  const umbrellaWrap = $('#umbrellaWrap');
+  const umbrella = $('#umbrella');
+  const covers = $$('.cover[data-proyecto]');
+  const proyectos = $$('.view--proyecto').map((v) => v.dataset.view);
+
+  let current = null;
+  let phase = 'intro'; // intro | playing | done
+
+  /* =========================================================
+     ROUTER (hash)
+     ========================================================= */
+  function routeName() {
+    const h = location.hash.replace(/^#\/?/, '');
+    return views[h] !== undefined ? h : '';
+  }
+
+  function show(name) {
+    if (name === current) return;
+    if (name === '') resetIntro();
+    proyectos.forEach((p) => { if (p !== name) views[p].classList.remove('from-cover', 'hold-hero', 'hold-rest'); });
+    Object.entries(views).forEach(([k, v]) => v.classList.toggle('is-active', k === name));
+    current = name;
+    body.classList.toggle('is-intro', name === '');
+    $$('.nav__links a').forEach((a) =>
+      a.dataset.nav === name ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')
+    );
+    const titles = { '': 'pulponalua · portfolio de Flavia Alonso', trabajos: 'trabajos', 'sobre-mi': 'sobre mi', contacto: 'contacto' };
+    proyectos.forEach((p) => { titles[p] = $('.h1', views[p]).textContent; });
+    document.title = name === '' ? titles[''] : `${titles[name]} · pulponalua`;
+    window.scrollTo(0, 0);
+    if (proyectos.includes(name)) requestAnimationFrame(alignEquipo);
+    if (name === 'sobre-mi') restartDibujo();
+    requestAnimationFrame(ajustarNotas);
+  }
+
+  // al entrar en "sobre mi" la flecha dibujada vuelve a empezar desde cero;
+  // luego se repite sola cada 10s (encadenado dentro del propio SVG)
+  function restartDibujo() {
+    const svg = $('#sobre-dibujo');
+    if (svg && svg.setCurrentTime) { try { svg.setCurrentTime(0); } catch (_) {} }
+  }
+
+  // "equipo del proyecto" a la misma altura que la última foto del proyecto
+  function alignEquipo() {
+    const page = views[current];
+    if (!page) return;
+    const eq = $('.proyecto__equipo', page);
+    const imgs = $$('.proyecto__img', page);
+    const img = imgs[imgs.length - 1];
+    if (!eq || !img || !page.classList.contains('is-active')) return;
+    if (getComputedStyle(eq).position !== 'absolute') { eq.style.top = ''; eq.style.bottom = ''; return; } // móvil: flujo normal
+    const der = $('.proyecto__der', page);
+    const dTop = der.getBoundingClientRect().top;
+    const iTop = img.getBoundingClientRect().top;
+    eq.style.top = Math.round(iTop - dTop) + 'px';
+    eq.style.bottom = 'auto';
+  }
+  window.addEventListener('resize', () => { if (proyectos.includes(current)) alignEquipo(); });
+  window.addEventListener('load', () => { if (proyectos.includes(current)) alignEquipo(); }); // por si alguna imagen tarda
+
+  window.addEventListener('hashchange', () => show(routeName()));
+
+  // los textos sobre las imágenes de un proyecto nunca se salen del borde de la imagen:
+  // si con la fuente cargada no caben, se reducen lo justo para que quepan
+  function ajustarNotas() {
+    $$('.proyecto__nota').forEach((n) => {
+      const bloque = n.parentElement;
+      if (!bloque.offsetWidth) return;
+      n.style.setProperty('--k', 1);
+      const l = parseFloat(getComputedStyle(n).getPropertyValue('--l')) || 0;
+      const margen = bloque.clientWidth * 24 / 1781;
+      const libre = bloque.clientWidth * (1 - l / 1781) - margen;
+      const ancho = Math.max(...[...n.children].map((p) => p.scrollWidth));
+      if (ancho > libre) n.style.setProperty('--k', (libre / ancho).toFixed(4));
+    });
+  }
+  window.addEventListener('resize', ajustarNotas);
+  if (document.fonts) document.fonts.ready.then(ajustarNotas);
+
+  /* =========================================================
+     PRINCIPAL: paraguas → lluvia → inundación → paraguas azul
+     (réplica exacta de pulponalua-animacion-inicial.html: arranca
+     al pulsar el paraguas cerrado y termina revelando "trabajos")
+     ========================================================= */
+  const DUR_INTRO = 4.6;        // segundos totales de la secuencia
+  const BLUE = '#0000ff';
+  const pageH = () => window.innerHeight;  // trabajos empieza justo debajo de la principal
+  const REDUCE = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // posiciones de las gotas (lienzo de diseño 1920×1080)
+  const POINTS = [
+    [381, 783],
+    [371, 329], [1633, 323], [1450, 779],
+    [1201, 427], [1633, 868], [891, 627], [308, 685],
+    [1754, 810], [1054, 359], [474, 563], [292, 908], [219, 318], [643, 413], [1019, 859], [1574, 510],
+    [679, 813], [137, 613], [1302, 877], [844, 299], [489, 278], [1382, 277], [1211, 624], [1706, 322],
+    [711, 853], [1334, 917]
+  ];
+  const RAIN_FROM = 0.2, RAIN_TO = 2.5;
+  const FALL = 0.38, FALL_DIST = 150;
+  const LIFE = 1.5;
+  const FADE = 0.6;
+  const ARM = 24;
+  const SPAN = [60, 82, 105], OPA = [1, 0.5, 0.1];
+
+  function bezier(x1, y1, x2, y2) {
+    const a = (p1, p2) => 1 - 3 * p2 + 3 * p1;
+    const b = (p1, p2) => 3 * p2 - 6 * p1;
+    const c = (p1) => 3 * p1;
+    const calc = (t, p1, p2) => ((a(p1, p2) * t + b(p1, p2)) * t + c(p1)) * t;
+    const slope = (t, p1, p2) => 3 * a(p1, p2) * t * t + 2 * b(p1, p2) * t + c(p1);
+    return (x) => {
+      if (x <= 0) return 0; if (x >= 1) return 1;
+      let t = x;
+      for (let i = 0; i < 8; i++) {
+        const s = slope(t, x1, x2); if (Math.abs(s) < 1e-6) break;
+        t -= (calc(t, x1, x2) - x) / s;
+      }
+      return calc(t, y1, y2);
+    };
+  }
+  const easeOutP = bezier(0.23, 1, 0.32, 1);
+  const easeInOutP = bezier(0.77, 0, 0.175, 1);
+  const gentleP = bezier(0.45, 0, 0.55, 1);
+  const fallP = bezier(0.55, 0, 0.9, 0.6);
+
+  const clamp01 = (x) => (x < 0 ? 0 : x > 1 ? 1 : x);
+  const prog = (t, a, b) => clamp01((t - a) / (b - a));
+  const lerp = (a, b, p) => a + (b - a) * p;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const DIRS = [[-1, -1], [1, -1], [1, 1], [-1, 1]];
+  let seed = 11;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+  let drops = [];
+
+  /* ─── sonido de la animación principal: paraguas, lluvia y ola (sintetizado con Web Audio,
+     igual que el sonido del papel en "trabajos"): clic al abrir el paraguas, un lecho de
+     lluvia continuo más el repiqueteo de cada gota al caer, y el oleaje grave que crece
+     hasta la inundación final ─── */
+  const SonidoIntro = (() => {
+    let ctx, out, ruido;
+    let activos = [];
+    function iniciar() {
+      if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return ctx; }
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+      out = ctx.createGain(); out.gain.value = .85;
+      out.connect(ctx.destination);
+      const len = ctx.sampleRate * 2;
+      ruido = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = ruido.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      return ctx;
+    }
+    const rndA = (a, b) => a + Math.random() * (b - a);
+    const marca = (nodo) => { activos.push(nodo); return nodo; };
+
+    function detener() {
+      activos.forEach((n) => { try { n.stop(); } catch (e) {} });
+      activos = [];
+    }
+
+    // clic seco del paraguas al abrirse: golpe grave del mango + resorte/tela agudos
+    function clicParaguas() {
+      if (!iniciar()) return;
+      if (ctx.state === 'suspended') ctx.resume();
+      const t = ctx.currentTime + .01;
+      const o = ctx.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(230, t);
+      o.frequency.exponentialRampToValueAtTime(65, t + .16);
+      const og = ctx.createGain();
+      og.gain.setValueAtTime(.0001, t);
+      og.gain.exponentialRampToValueAtTime(.5, t + .008);
+      og.gain.exponentialRampToValueAtTime(.0001, t + .22);
+      o.connect(og).connect(out);
+      marca(o).start(t); o.stop(t + .25);
+
+      const s = ctx.createBufferSource(); s.buffer = ruido; s.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2600; bp.Q.value = 1.1;
+      const sg = ctx.createGain();
+      sg.gain.setValueAtTime(.0001, t);
+      sg.gain.exponentialRampToValueAtTime(.3, t + .01);
+      sg.gain.exponentialRampToValueAtTime(.0001, t + .14);
+      s.connect(bp).connect(sg).connect(out);
+      marca(s).start(t, rndA(0, 1.5)); s.stop(t + .16);
+    }
+
+    // impacto suave de una gota: solo ruido filtrado (sin tono, que sonaba a pájaro),
+    // un "tap" apagado con un poco de cuerpo grave
+    function gota(t0, vol = .16) {
+      if (!iniciar() || ctx.state !== 'running') return;
+      const t = ctx.currentTime + t0;
+      const s = ctx.createBufferSource(); s.buffer = ruido;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass';
+      bp.frequency.value = rndA(900, 2000); bp.Q.value = rndA(.6, 1.1);
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 3200;
+      const sg = ctx.createGain();
+      sg.gain.setValueAtTime(.0001, t);
+      sg.gain.exponentialRampToValueAtTime(vol * .55, t + .004);
+      sg.gain.exponentialRampToValueAtTime(.0001, t + rndA(.04, .07));
+      s.connect(bp).connect(lp).connect(sg).connect(out);
+      marca(s).start(t, rndA(0, 1.5)); s.stop(t + .09);
+    }
+
+    // lecho continuo de lluvia de fondo: ruido ancho tipo "shhh" (sin filtro de banda
+    // estrecha, que lo apagaba demasiado), con una envolvente lenta que crece y se apaga
+    // cuando llega la ola; "puntos" son pares [segundos desde t0, ganancia]
+    function lluvia(t0, puntos) {
+      if (!iniciar() || ctx.state !== 'running') return;
+      const t = ctx.currentTime + t0;
+      const dur = puntos[puntos.length - 1][0];
+      const s = ctx.createBufferSource(); s.buffer = ruido; s.loop = true;
+      const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 350;
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 4200; lp.Q.value = .5;
+      const sh = ctx.createBiquadFilter(); sh.type = 'highshelf'; sh.frequency.value = 2500; sh.gain.value = -6;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(.0001, t);
+      puntos.forEach(([dt, v]) => g.gain.linearRampToValueAtTime(Math.max(v, .0001), t + dt));
+      s.connect(hp).connect(lp).connect(sh).connect(g).connect(out);
+      marca(s).start(t, rndA(0, 1)); s.stop(t + dur + .3);
+    }
+
+    // repiqueteo denso de la lluvia (muchos impactos diminutos y aleatorios, como gotas
+    // sobre una superficie): lo que de verdad hace que el lecho de fondo suene a lluvia
+    // y no a simple siseo de viento. "en" = inicio en segundos desde ahora.
+    function lluviaPatter(en, dur, { densidad = 60, vol = .05 } = {}) {
+      if (!iniciar() || ctx.state !== 'running') return;
+      const t0 = ctx.currentTime + en;
+      let t = 0;
+      while (t < dur) {
+        t += -Math.log(1 - Math.random()) / densidad;
+        if (t >= dur) break;
+        const st = t0 + t;
+        const s = ctx.createBufferSource(); s.buffer = ruido;
+        const bp = ctx.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = rndA(1200, 3400); bp.Q.value = rndA(.5, 1.2);
+        const g = ctx.createGain();
+        const a = vol * (.3 + Math.random() * .6);
+        g.gain.setValueAtTime(.0001, st);
+        g.gain.exponentialRampToValueAtTime(Math.max(a, .0003), st + .003);
+        g.gain.exponentialRampToValueAtTime(.0001, st + rndA(.015, .035));
+        s.connect(bp).connect(g).connect(out);
+        marca(s).start(st, rndA(0, 1.8)); s.stop(st + .05);
+      }
+    }
+
+    // oleaje grave que crece hasta inundar: ruido grave con un balanceo lento (como el
+    // vaivén de una ola real), un cuerpo sub-grave que le da peso, espuma aguda que
+    // crece justo antes de romper, y un golpe de "splash" final
+    function ola(t0, dur) {
+      if (!iniciar() || ctx.state !== 'running') return;
+      const t = ctx.currentTime + t0;
+
+      // cuerpo principal: ruido grave con balanceo (LFO sobre el filtro de paso bajo)
+      const s = ctx.createBufferSource(); s.buffer = ruido; s.loop = true;
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass';
+      lp.frequency.setValueAtTime(260, t);
+      lp.frequency.linearRampToValueAtTime(110, t + dur);
+      const lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = .35;
+      const lfoG = ctx.createGain(); lfoG.gain.value = 45;
+      lfo.connect(lfoG).connect(lp.frequency);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(.0001, t);
+      g.gain.linearRampToValueAtTime(.4, t + dur * .55);
+      g.gain.linearRampToValueAtTime(.34, t + dur * .75);
+      g.gain.linearRampToValueAtTime(.6, t + dur);
+      g.gain.exponentialRampToValueAtTime(.0001, t + dur + .9);
+      s.connect(lp).connect(g).connect(out);
+      marca(lfo).start(t); lfo.stop(t + dur + 1);
+      marca(s).start(t, rndA(0, 1)); s.stop(t + dur + 1);
+
+      // sub-grave: un seno muy bajo que da peso y cuerpo a la masa de agua
+      const sub = ctx.createOscillator(); sub.type = 'sine';
+      sub.frequency.setValueAtTime(70, t);
+      sub.frequency.linearRampToValueAtTime(48, t + dur);
+      const subG = ctx.createGain();
+      subG.gain.setValueAtTime(.0001, t);
+      subG.gain.linearRampToValueAtTime(.16, t + dur * .85);
+      subG.gain.linearRampToValueAtTime(.22, t + dur);
+      subG.gain.exponentialRampToValueAtTime(.0001, t + dur + .7);
+      sub.connect(subG).connect(out);
+      marca(sub).start(t); sub.stop(t + dur + .8);
+
+      // espuma: ruido agudo que crece justo antes de romper la ola
+      const esp = ctx.createBufferSource(); esp.buffer = ruido; esp.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2200; bp.Q.value = .6;
+      const espG = ctx.createGain();
+      espG.gain.setValueAtTime(.0001, t);
+      espG.gain.linearRampToValueAtTime(.0001, t + dur * .55);
+      espG.gain.linearRampToValueAtTime(.2, t + dur * .95);
+      espG.gain.linearRampToValueAtTime(.26, t + dur);
+      espG.gain.exponentialRampToValueAtTime(.0001, t + dur + .5);
+      esp.connect(bp).connect(espG).connect(out);
+      marca(esp).start(t, rndA(0, 1)); esp.stop(t + dur + .6);
+
+      // splash final: golpe amplio de ruido al inundar
+      const t2 = t + dur;
+      const sp = ctx.createBufferSource(); sp.buffer = ruido;
+      const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 500;
+      const spg = ctx.createGain();
+      spg.gain.setValueAtTime(.0001, t2);
+      spg.gain.exponentialRampToValueAtTime(.55, t2 + .04);
+      spg.gain.exponentialRampToValueAtTime(.0001, t2 + .9);
+      sp.connect(hp).connect(spg).connect(out);
+      marca(sp).start(t2, rndA(0, 1)); sp.stop(t2 + 1);
+    }
+
+    return { iniciar, detener, clicParaguas, gota, lluvia, lluviaPatter, ola };
+  })();
+
+  function buildDrops() {
+    rain.innerHTML = '';
+    seed = 11;
+    const frag = document.createDocumentFragment();
+    drops = POINTS.map((pt, i) => {
+      const g = document.createElementNS(NS, 'g');
+      g.setAttribute('stroke', BLUE); g.setAttribute('stroke-width', '4'); g.setAttribute('fill', 'none');
+      const lines = [];
+      for (let k = 0; k < 4; k++) { const l = document.createElementNS(NS, 'line'); g.appendChild(l); lines.push(l); }
+      frag.appendChild(g);
+      const p = Math.pow((i + 0.5) / POINTS.length, 0.8);
+      const land = RAIN_FROM + p * (RAIN_TO - RAIN_FROM) + (rnd() - 0.5) * 0.18;
+      return { x: pt[0], y: pt[1], land, g, lines };
+    });
+    rain.appendChild(frag);
+  }
+
+  function setDrop(d, half, inner, op, dy, stretch) {
+    for (let k = 0; k < 4; k++) {
+      const sx = DIRS[k][0], sy = DIRS[k][1], l = d.lines[k];
+      l.setAttribute('x1', (d.x + sx * half).toFixed(2));  l.setAttribute('y1', (d.y + dy + sy * half * stretch).toFixed(2));
+      l.setAttribute('x2', (d.x + sx * inner).toFixed(2)); l.setAttribute('y2', (d.y + dy + sy * inner * stretch).toFixed(2));
+    }
+    d.g.setAttribute('opacity', op.toFixed(3));
+  }
+
+  function through(arr, p) {
+    const x = p * (arr.length - 1), i = Math.min(Math.floor(x), arr.length - 2);
+    return lerp(arr[i], arr[i + 1], gentleP(x - i));
+  }
+
+  const TAU = Math.PI * 2;
+  const WAVE_PTS = [];
+  for (let x = -40; x <= 1960; x += 12) WAVE_PTS.push(x);
+  function wavePath(level, amp, t, ph) {
+    const parts = new Array(WAVE_PTS.length + 2);
+    parts[0] = 'M -40 1300';
+    for (let i = 0; i < WAVE_PTS.length; i++) {
+      const x = WAVE_PTS[i];
+      const y = level
+        + amp * 0.66 * Math.sin(x * TAU / 1350 - t * 2.4 + ph)
+        + amp * 0.34 * Math.sin(x * TAU / 2900 - t * 1.3 + ph * 1.7 + 1.2);
+      parts[i + 1] = 'L ' + x + ' ' + y.toFixed(1);
+    }
+    parts[parts.length - 1] = 'L 1960 1300 Z';
+    return parts.join(' ');
+  }
+  const WAVE_FROM = 2.0, WAVE_TO = 3.9;
+  const riseP = bezier(0.35, 0.05, 0.65, 0.95);
+
+  function renderIntro(t) {
+    // lluvia: cada gota cae y se abre en una salpicadura en forma de aspa
+    drops.forEach((d) => {
+      const s = t - d.land;
+      if (s < -FALL) { d.g.setAttribute('opacity', 0); return; }
+      if (s < 0) {
+        const p = (s + FALL) / FALL;
+        const dy = REDUCE ? 0 : -FALL_DIST * (1 - fallP(p));
+        setDrop(d, 22, 4, easeOutP(clamp01(p * 1.6)), dy, REDUCE ? 1 : 1.5);
+        return;
+      }
+      const q = clamp01(s / LIFE);
+      const e = easeOutP(q);
+      const half = lerp(22, SPAN[2] / 2, e);
+      const inner = Math.max(half - ARM, lerp(4, 0, clamp01(s / 0.12)));
+      const op = through(OPA, q) * (1 - gentleP(clamp01((s - LIFE) / FADE)));
+      const settle = lerp(1.5, 1, easeOutP(clamp01(s / 0.18)));
+      setDrop(d, half, inner, op, 0, REDUCE ? 1 : settle);
+    });
+
+    // ola que sube poco a poco hasta inundar de azul la pantalla
+    const wp = prog(t, WAVE_FROM, WAVE_TO);
+    if (wp <= 0) {
+      if (waveFront.getAttribute('d')) waveFront.setAttribute('d', '');
+    } else {
+      const amp = 560 * (1 - 0.72 * Math.pow(wp, 2.2)) * (REDUCE ? 0.4 : 1);
+      const surge = REDUCE ? 0 : 18 * Math.sin(TAU * (t - WAVE_FROM) / 1.3) * (1 - wp);
+      const lv = lerp(1700, -170, riseP(wp)) + surge;
+      waveFront.setAttribute('d', wavePath(lv, amp, t, 0));
+    }
+
+    // el paraguas sube por CSS (@keyframes umbrellaRise)
+
+    // tramo final: la principal sube y "trabajos", que va a continuación, ocupa la pantalla
+    if (t >= 3.6) {
+      const sc = easeInOutP(prog(t, 3.6, 4.6));
+      const h = pageH();
+      introStage.style.transform = 'translate3d(0,' + (-h * sc).toFixed(2) + 'px,0)';
+      viewTrabajos.style.transform = 'translate3d(0,' + (h * (1 - sc)).toFixed(2) + 'px,0)';
+    }
+  }
+
+  function fitIntroStage() {
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    introStageInner.style.transform = 'scale(' + s + ')';
+  }
+  // ya colocado (aunque oculto) desde la carga, para que el primer clic no tenga que
+  // maquetar de golpe un bloque de 1920×1080 (eso es lo que causaba el tirón inicial)
+  fitIntroStage();
+  window.addEventListener('resize', () => { if (phase !== 'done') fitIntroStage(); });
+
+  function restartCss(el) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; }
+
+  let introRaf = null, introLast = null, introElapsed = 0;
+  // si el hueco entre dos frames es enorme (pestaña en segundo plano, GC largo...)
+  // no se suma ese hueco entero (eso provocaba el salto al final), pero tampoco se
+  // limita cada frame normal a un tope minúsculo (eso hacía la animación lenta/trabada
+  // en cuanto un frame tardaba un poco más de lo habitual): solo se corrige el caso
+  // anómalo, tratándolo como un frame normal más.
+  const INTRO_STALL_GAP = 0.2;   // por encima de esto se considera un atasco real
+  const INTRO_STALL_STEP = 1 / 60; // avance que se aplica en ese caso
+  function introLoop() {
+    introRaf = requestAnimationFrame((now) => {
+      if (introLast === null) introLast = now;
+      let dt = (now - introLast) / 1000;
+      if (dt > INTRO_STALL_GAP) dt = INTRO_STALL_STEP;
+      introElapsed += dt;
+      introLast = now;
+      renderIntro(Math.min(introElapsed, DUR_INTRO));
+      if (introElapsed < DUR_INTRO) introLoop(); else finishIntro();
+    });
+  }
+
+  function resetIntro() {
+    phase = 'intro';
+    if (introRaf) cancelAnimationFrame(introRaf);
+    introLast = null;
+    introElapsed = 0;
+    introStage.classList.remove('is-on');
+    introStage.style.transform = '';
+    rain.innerHTML = '';
+    waveFront.setAttribute('d', ''); waterClipPath.setAttribute('d', '');
+    viewTrabajos.classList.remove('peek');
+    viewTrabajos.style.transform = '';
+    body.classList.remove('is-raining');
+    restartCss(umbrellaWrap);
+    SonidoIntro.detener();
+  }
+
+  // decodifica de antemano las imágenes de "trabajos" para que la revelación final no
+  // tenga que decodificarlas de golpe (evita el tirón justo al terminar la animación)
+  let trabajosPreloaded = false;
+  function preloadTrabajos() {
+    if (trabajosPreloaded) return;
+    trabajosPreloaded = true;
+    const urls = new Set($$('img', viewTrabajos).map((img) => img.currentSrc || img.src));
+    $$('.cover', viewTrabajos).forEach((el) => {
+      [el, ...$$('*', el)].forEach((node) => {
+        const m = /url\(["']?([^"')]+)["']?\)/.exec(getComputedStyle(node).backgroundImage);
+        if (m) urls.add(m[1]);
+      });
+    });
+    urls.forEach((src) => {
+      if (!src) return;
+      const img = new Image();
+      img.src = src;
+      if (img.decode) img.decode().catch(() => {});
+    });
+  }
+
+  function startRain() {
+    if (phase !== 'intro') return;
+    phase = 'playing';
+    body.classList.add('is-raining');
+    introStage.classList.add('is-on');
+    fitIntroStage();
+    buildDrops();
+    viewTrabajos.classList.add('is-active', 'peek');
+    introStage.style.transform = '';
+    viewTrabajos.style.transform = 'translate3d(0,' + pageH() + 'px,0)';
+    setTimeout(preloadTrabajos, 400);
+    restartCss(umbrellaWrap);
+    SonidoIntro.clicParaguas();
+    SonidoIntro.lluvia(0, [
+      [RAIN_FROM, .0001], [RAIN_FROM + 1, .09], [RAIN_TO, .15],
+      [WAVE_FROM + .6, .11], [WAVE_TO, .012], [WAVE_TO + .5, .0001]
+    ]);
+    SonidoIntro.lluviaPatter(RAIN_FROM, 1, { densidad: 40, vol: .025 });
+    SonidoIntro.lluviaPatter(RAIN_FROM + .8, RAIN_TO - RAIN_FROM - .6, { densidad: 140, vol: .03 });
+    SonidoIntro.lluviaPatter(WAVE_FROM + .4, WAVE_TO - WAVE_FROM - .2, { densidad: 80, vol: .022 });
+    drops.forEach((d) => SonidoIntro.gota(d.land, rnd() * .02 + .035));
+    SonidoIntro.ola(WAVE_FROM, WAVE_TO - WAVE_FROM);
+    renderIntro(0);
+    introLoop();
+  }
+
+  function finishIntro() {
+    phase = 'done';
+    introStage.classList.remove('is-on');
+    $$('.cursor-bubble').forEach((el) => el.classList.remove('is-on'));
+    body.classList.remove('show-cursor-bubble');
+    introStage.style.transform = '';
+    viewTrabajos.classList.remove('peek');
+    viewTrabajos.style.transform = '';
+    views[''].classList.remove('is-active');
+    current = 'trabajos';
+    body.classList.remove('is-intro', 'is-raining');
+    $$('.nav__links a').forEach((a) =>
+      a.dataset.nav === 'trabajos' ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')
+    );
+    document.title = 'trabajos · pulponalua';
+    history.replaceState(null, '', '#trabajos');
+    window.scrollTo(0, 0);
+  }
+
+  umbrella.addEventListener('click', startRain);
+
+  /* ----- bolita que sigue al cursor en la página principal ----- */
+  if (matchMedia('(hover: hover)').matches) {
+    const cursorBubble = document.createElement('div');
+    cursorBubble.className = 'cursor-bubble';
+    cursorBubble.setAttribute('aria-hidden', 'true');
+    cursorBubble.textContent = 'AGARRA EL PARAGUAS';
+    document.body.appendChild(cursorBubble);
+    window.addEventListener('mousemove', (e) => {
+      const show = current === '' && phase === 'intro';
+      body.classList.toggle('show-cursor-bubble', show);
+      cursorBubble.classList.toggle('is-on', show);
+      if (show) {
+        // la bolita se queda siempre por debajo del navbar
+        const navBottom = nav.getBoundingClientRect().bottom;
+        const r = cursorBubble.offsetHeight / 2;
+        const y = Math.max(e.clientY, navBottom + r + 8);
+        const overNav = e.clientY < navBottom;
+        cursorBubble.classList.toggle('is-on', !overNav);
+        body.classList.toggle('show-cursor-bubble', !overNav);
+        cursorBubble.style.transform = `translate(${e.clientX}px, ${y}px) translate(-50%,-50%)`;
+      }
+    });
+  }
+
+  /* =========================================================
+     TRABAJOS: portada de Dobraondas — réplica exacta de la animación
+     de referencia (obra.js/obra.css): la tarjeta se centra al pasar
+     el ratón y, al pulsar, el papel se parte en dos mitades que giran
+     en 3D dejando ver la foto. Al terminar (igual que antes), la foto
+     se expande a pantalla completa y aterriza en la página del proyecto.
+     ========================================================= */
+  let opening = false;
+  let generation = 0;
+  let exEl = null;
+  let veloEl = null;
+  const canHover = matchMedia('(hover:hover)').matches;
+
+  const AJ = {
+    volumen: 0.9,
+    hover: { dur: 400, easing: 'cubic-bezier(.22,1,.36,1)' },
+    salida: { dur: 450, easing: 'cubic-bezier(.55,0,.75,.2)' },   // la tarjeta se va
+    corte: { dur: 550, easing: 'cubic-bezier(.22,1,.36,1)', retraso: 280 }, // el papel se divide
+    pausa: 160,
+    apertura: { dur: 650, easing: 'cubic-bezier(.4,0,.2,1)' },    // el papel se desenvuelve
+    crece: { dur: 1200, easing: 'cubic-bezier(.65,0,.2,1)' },     // la foto crece a pantalla completa
+    corteX: -16.48,
+    giro: 82
+  };
+
+  const T1 = 'translate(61.95%, 17.3%) rotate(-4.46deg) scale(.5993)';
+  const T2 = 'translate(0%, 0%) rotate(0deg) scale(1)';
+  const TFUERA = 'translate(3%, 122%) rotate(5deg) scale(1.02)';
+
+  /* ─── sonido de papel (idéntico al de referencia: sintetizado con Web Audio) ─── */
+  const Papel = (() => {
+    let ctx, out, ruido;
+    function iniciar() {
+      if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return ctx; }
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      ctx = new AC();
+      const comp = ctx.createDynamicsCompressor();
+      comp.threshold.value = -18; comp.ratio.value = 4;
+      out = ctx.createGain(); out.gain.value = AJ.volumen;
+      out.connect(comp).connect(ctx.destination);
+      const len = ctx.sampleRate * 2;
+      ruido = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = ruido.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      return ctx;
+    }
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    const logRnd = (a, b) => Math.exp(rnd(Math.log(a), Math.log(b)));
+
+    function roce({ en = 0, dur = .4, f0 = 1500, f1 = 4000, q = .7, vol = .25 } = {}) {
+      if (!iniciar() || ctx.state !== 'running') return;
+      const t = ctx.currentTime + en / 1000;
+      const s = ctx.createBufferSource(); s.buffer = ruido; s.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = q;
+      bp.frequency.setValueAtTime(f0, t);
+      bp.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 500;
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(vol, t + dur * .3);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      s.connect(bp).connect(hp).connect(g).connect(out);
+      s.start(t, rnd(0, 1.5)); s.stop(t + dur + .05);
+    }
+
+    function cruje({ en = 0, dur = .5, densidad = 90, vol = .5, fmin = 1400, fmax = 7000 } = {}) {
+      if (!iniciar() || ctx.state !== 'running') return;
+      const t0 = ctx.currentTime + en / 1000;
+      let t = 0;
+      while (t < dur) {
+        const x = t / dur;
+        const env = Math.pow(Math.sin(Math.PI * Math.min(1, x * 1.1)), .6) + .05;
+        t += -Math.log(1 - Math.random()) / (densidad * env);
+        if (t >= dur) break;
+        const st = t0 + t;
+        const len = logRnd(.01, .055);
+        const s = ctx.createBufferSource(); s.buffer = ruido;
+        const bp = ctx.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = logRnd(fmin, fmax); bp.Q.value = rnd(.6, 2.2);
+        const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 4200; lp.Q.value = .5;
+        const g = ctx.createGain();
+        const a = vol * env * Math.pow(Math.random(), 1.6);
+        g.gain.setValueAtTime(0.0001, st);
+        g.gain.exponentialRampToValueAtTime(Math.max(a, .0002), st + .006);
+        g.gain.exponentialRampToValueAtTime(0.0001, st + len);
+        s.connect(bp).connect(lp).connect(g).connect(out);
+        s.start(st, rnd(0, 1.9)); s.stop(st + len + .01);
+      }
+    }
+
+    let ultimoHover = 0;
+    return {
+      iniciar,
+      // solo suena al entrar, y no más de uno cada 350 ms para que no se solapen al pasar entre portadas
+      hoverIn()  { const ahora = performance.now(); if (ahora - ultimoHover < 350) return; ultimoHover = ahora; roce({ dur: .38, f0: 1800, f1: 4200, vol: .16 }); cruje({ dur: .28, densidad: 45, vol: .22 }); },
+      hoverOut() { roce({ dur: .32, f0: 3800, f1: 1600, vol: .12 }); cruje({ dur: .2, densidad: 35, vol: .16 }); },
+      salida()   { roce({ dur: .4, f0: 2000, f1: 1000, vol: .16 }); cruje({ dur: .28, densidad: 40, vol: .16, fmin: 700, fmax: 3800 }); },
+      corte(en)  { cruje({ en, dur: .4, densidad: 85, vol: .32, fmin: 700, fmax: 3800 }); roce({ en, dur: .4, f0: 650, f1: 2000, q: 1, vol: .14 }); },
+      apertura(en) { cruje({ en, dur: .9, densidad: 55, vol: .3, fmin: 700, fmax: 3800 }); roce({ en, dur: .9, f0: 800, f1: 2400, q: .6, vol: .16 }); }
+    };
+  })();
+
+  function animaCover(el, frames, { dur, easing = 'linear', retraso = 0 }) {
+    el.getAnimations().forEach((a) => { try { a.commitStyles(); } catch (e) {} a.cancel(); });
+    const cs = getComputedStyle(el);
+    const desde = {};
+    for (const k of Object.keys(frames[frames.length - 1])) if (k !== 'offset') desde[k] = cs[k];
+    return el.animate([desde, ...frames], { duration: dur, easing, delay: retraso, fill: 'forwards' });
+  }
+
+  // sin scroll mientras dura la animación
+  window.addEventListener('wheel', (e) => { if (opening) e.preventDefault(); }, { passive: false });
+  window.addEventListener('touchmove', (e) => { if (opening) e.preventDefault(); }, { passive: false });
+
+  const FULL = { top: '0px', left: '0px', right: '0px', bottom: '0px' };
+  const insetOf = (r) => ({
+    top: r.top + 'px', left: r.left + 'px',
+    right: (innerWidth - r.right) + 'px', bottom: (innerHeight - r.bottom) + 'px'
+  });
+  const glide = (el, from, to, duration) =>
+    el.animate([from, to], { duration, easing: 'cubic-bezier(.65,0,.2,1)', fill: 'forwards' }).finished;
+  const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+  /* cada portada de "trabajos" con la misma animación que Dobraondas:
+     la tarjeta se centra al pasar el ratón y, al pulsar, el papel se parte en
+     dos mitades que giran en 3D dejando ver la foto, que crece a pantalla
+     completa (de gris a color) y aterriza en la página de su proyecto */
+  function montarCover(cover) {
+    const slug = cover.dataset.proyecto;
+    const page = views[slug];
+    const etiqueta = cover.getAttribute('aria-label');
+    const marco = $('.co-marco', cover);
+    const tarjeta = $('.co-tarjeta', cover);
+    const l2024 = $('.co-logo-2024', cover);
+    const lA = $('.co-logo-a', cover);
+    const izq = $$('.co-izq', marco);
+    const der = $$('.co-der', marco);
+    const capasCover = [...izq, ...der];
+    const baseOpacity = new Map(capasCover.map((c) => [c, parseFloat(getComputedStyle(c).opacity)]));
+    let estadoCover = 'cerrado'; // cerrado | abriendo | abierto
+    let encima = false;
+
+    const persp = () => `perspective(${Math.round(marco.clientWidth * 2.4)}px)`;
+    const tIzq = (x, g) => `${persp()} translateX(${x}%) rotateY(${g}deg)`;
+    const tDer = (x, g) => `${persp()} translateX(${x}%) rotateY(${g}deg)`;
+
+    /* 1 ⇄ 2: la tarjeta se centra al pasar el ratón (o el foco) */
+    function estado2(on) {
+      const h = AJ.hover;
+      animaCover(tarjeta, [{ transform: on ? T2 : T1 }], h);
+      animaCover(l2024, [{ opacity: on ? 0 : 1, transform: on ? 'translateY(-8%) scale(.92)' : 'none' }], { ...h, dur: h.dur * .6 });
+      animaCover(lA, [{ opacity: on ? 0 : 1, transform: on ? 'translate(-40%, 30%) scale(.6) rotate(-20deg)' : 'none' }], { ...h, dur: h.dur * .6 });
+    }
+
+    if (canHover) {
+      cover.addEventListener('mouseenter', () => { encima = true; if (!opening && estadoCover === 'cerrado') { estado2(true); Papel.hoverIn(); } });
+      cover.addEventListener('mouseleave', () => { encima = false; if (!opening && estadoCover === 'cerrado') estado2(false); });
+    }
+    cover.addEventListener('focus', () => { if (!opening && estadoCover === 'cerrado' && !encima) { encima = true; estado2(true); Papel.hoverIn(); } });
+    cover.addEventListener('blur', () => { if (!opening && estadoCover === 'cerrado' && encima) { encima = false; estado2(false); } });
+
+    // borra el inline que deja commitStyles para volver al estado de la hoja de estilos
+    function limpiarInlineCover() {
+      [tarjeta, l2024, lA, ...capasCover].forEach((el) => {
+        el.style.removeProperty('transform');
+        el.style.removeProperty('opacity');
+      });
+    }
+
+    function reiniciar() {
+      cover.getAnimations().forEach((a) => a.cancel());
+      $$('.co-tarjeta,.co-logo-2024,.co-logo-a,.co-capa', cover).forEach((el) =>
+        el.getAnimations().forEach((a) => a.cancel())
+      );
+      limpiarInlineCover();
+      marco.classList.remove('co-partido');
+      cover.setAttribute('aria-label', etiqueta);
+    }
+
+    // al salir de "trabajos" a medias, todo vuelve a su sitio
+    function salir(abriendoEsta) {
+      if (abriendoEsta) {
+        reiniciar();
+        page.classList.remove('from-cover', 'hold-hero', 'hold-rest');
+      } else if (encima && estadoCover === 'cerrado') {
+        estado2(false);
+      }
+      estadoCover = 'cerrado';
+      encima = false;
+    }
+
+    /* 2 → 3 → 4: el papel se parte y se abre */
+    async function abrirCover() {
+      estadoCover = 'abriendo';
+      cover.setAttribute('aria-label', etiqueta.split('.')[0] + ': cargando proyecto');
+      Papel.iniciar();
+      const s = AJ;
+
+      animaCover(l2024, [{ opacity: 0, transform: 'translateY(-8%) scale(.92)' }], { dur: 350, easing: 'ease-out' });
+      animaCover(lA, [{ opacity: 0, transform: 'translate(-40%, 30%) scale(.6) rotate(-20deg)' }], { dur: 350, easing: 'ease-out' });
+
+      animaCover(tarjeta, [{ transform: 'translate(0%, -2%) rotate(-.5deg) scale(1.03)', offset: .22 }, { transform: TFUERA }], s.salida);
+      Papel.salida();
+
+      setTimeout(() => { if (estadoCover === 'abriendo') marco.classList.add('co-partido'); }, s.corte.retraso);
+      izq.forEach((c) => animaCover(c, [{ transform: tIzq(s.corteX, 0) }], { ...s.corte, retraso: s.corte.retraso }));
+      der.forEach((c) => animaCover(c, [{ transform: tDer(0, 0) }], { ...s.corte, retraso: s.corte.retraso }));
+      Papel.corte(s.corte.retraso);
+      await sleep(s.corte.retraso + s.corte.dur * .78 + s.pausa);
+      if (estadoCover !== 'abriendo') return;
+
+      const a = s.apertura;
+      Papel.apertura(0);
+      izq.forEach((c) => {
+        const op = c.classList.contains('co-sombra') ? 0 : baseOpacity.get(c);
+        animaCover(c, [
+          { transform: tIzq(s.corteX - 8, -s.giro * .35), opacity: c.classList.contains('co-sombra') ? .8 : op, offset: .65 },
+          { transform: tIzq(s.corteX - 34, -s.giro), opacity: 0 }
+        ], a);
+      });
+      der.forEach((c) => {
+        const op = c.classList.contains('co-sombra') ? 0 : baseOpacity.get(c);
+        animaCover(c, [
+          { transform: tDer(6, s.giro * .35), opacity: c.classList.contains('co-sombra') ? .8 : op, offset: .65 },
+          { transform: tDer(26, s.giro), opacity: 0 }
+        ], a);
+      });
+      await sleep(a.dur);
+      if (estadoCover !== 'abriendo') return;
+      estadoCover = 'abierto';
+    }
+
+    cover.addEventListener('click', async (e) => {
+      e.preventDefault();
+      if (opening) return;
+      opening = slug;
+      const myGen = generation;
+      const vivo = () => myGen === generation;
+      try {
+        Papel.iniciar();
+
+        if (estadoCover === 'cerrado' && !encima) { encima = true; estado2(true); Papel.hoverIn(); await sleep(AJ.hover.dur); }
+        if (!vivo()) return;
+
+        await abrirCover();
+        if (!vivo() || estadoCover !== 'abierto') return;
+
+        // transición: la foto se separa de la portada mientras "trabajos" se funde a blanco,
+        // la página del proyecto se monta detrás y la foto vuela directamente a su sitio
+        // (pasando de gris a color y a la imagen principal); después aparece el resto
+        const r = cover.getBoundingClientRect();
+        const velo = document.createElement('div');
+        velo.className = 'velo';
+        document.body.appendChild(velo);
+        const ex = document.createElement('div');
+        ex.className = 'expand expand--' + slug;
+        Object.assign(ex.style, insetOf(r));
+        const exColor = document.createElement('div');
+        exColor.className = 'expand-color';
+        ex.appendChild(exColor);
+        document.body.appendChild(ex);
+        exEl = ex; veloEl = velo;
+        exColor.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
+        velo.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, easing: 'ease', fill: 'forwards' });
+        ex.animate([{ transform: 'scale(1)', boxShadow: '0 0 0 rgba(0,0,0,0)' }, { transform: 'scale(1.018)', boxShadow: '0 20px 48px rgba(0,0,0,.18)' }],
+          { duration: 380, easing: 'cubic-bezier(.3,0,.2,1)', fill: 'forwards' });
+        await sleep(360);
+        if (!vivo()) return;
+
+        page.classList.add('from-cover', 'hold-hero', 'hold-rest');
+        show(slug);
+        try { history.pushState(null, '', '#' + slug); } catch (_) { location.hash = '#' + slug; }
+        reiniciar();
+        estadoCover = 'cerrado';
+        encima = false;
+        await frame();
+        if (!vivo()) return;
+
+        const hero = $('.proyecto__hero', page);
+        const hr = hero.getBoundingClientRect();
+        const VUELO = 780;
+        setTimeout(() => ex.classList.add('is-full'), 170);
+        ex.animate([{ transform: 'scale(1.018)', boxShadow: '0 20px 48px rgba(0,0,0,.18)' }, { transform: 'scale(1)', boxShadow: '0 0 0 rgba(0,0,0,0)' }],
+          { duration: VUELO, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards' });
+        setTimeout(() => { if (vivo()) page.classList.remove('hold-rest'); }, VUELO * .8);
+        await ex.animate([insetOf(r), insetOf(hr)], { duration: VUELO, easing: 'cubic-bezier(.45,0,.15,1)', fill: 'forwards' }).finished;
+        if (!vivo()) return;
+
+        hero.style.transition = 'none';
+        page.classList.remove('hold-hero');
+        void hero.offsetWidth;
+        ex.remove(); velo.remove();
+        exEl = null; veloEl = null;
+        hero.style.transition = '';
+      } catch (err) {
+        salirDeTrabajos();
+      } finally {
+        if (vivo()) opening = false;
+      }
+    });
+
+    return { slug, salir };
+  }
+
+  const coversMontadas = covers.map(montarCover);
+
+  function salirDeTrabajos() {
+    generation++;
+    const abierta = opening;
+    coversMontadas.forEach((c) => c.salir(c.slug === abierta || (exEl && c.slug === abierta)));
+    if (exEl) { exEl.remove(); exEl = null; }
+    if (veloEl) { veloEl.remove(); veloEl = null; }
+    opening = false;
+  }
+  window.addEventListener('hashchange', () => { if (routeName() !== 'trabajos') salirDeTrabajos(); });
+
+  /* =========================================================
+     PROYECTOS: vídeo de YouTube que se reproduce (con sonido) al
+     verlo en pantalla y se pausa al salir; carrusel de fotos
+     ========================================================= */
+  $$('iframe[data-yt]').forEach((ifr) => {
+    let listo = false, visible = false, sonando = false, comprobacion = null;
+    const cmd = (func, args = []) => {
+      try { ifr.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), '*'); } catch (_) {}
+    };
+    const aplicar = () => {
+      if (!listo) return;
+      if (visible) {
+        cmd('unMute'); cmd('setVolume', [100]); cmd('playVideo');
+        // si el navegador no deja empezar con sonido, arranca en silencio
+        clearTimeout(comprobacion);
+        comprobacion = setTimeout(() => { if (visible && !sonando) { cmd('mute'); cmd('playVideo'); } }, 1200);
+      } else {
+        clearTimeout(comprobacion);
+        cmd('pauseVideo');
+      }
+    };
+    ifr.addEventListener('load', () => {
+      listo = true;
+      try { ifr.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: ifr.dataset.yt }), '*'); } catch (_) {}
+      aplicar();
+    });
+    window.addEventListener('message', (e) => {
+      if (e.source !== ifr.contentWindow || typeof e.data !== 'string') return;
+      let d; try { d = JSON.parse(e.data); } catch (_) { return; }
+      const st = d.info && typeof d.info === 'object' ? d.info.playerState : (d.event === 'onStateChange' ? d.info : undefined);
+      if (st === 1) sonando = true; else if (st === 2 || st === 0) sonando = false;
+    });
+    new IntersectionObserver((ents) => {
+      ents.forEach((en) => { visible = en.isIntersecting && en.intersectionRatio >= .5; aplicar(); });
+    }, { threshold: [0, .5, 1] }).observe(ifr.parentElement);
+  });
+
+  // vídeos propios: se reproducen con sonido al verlos en pantalla y se pausan al salir
+  // (si el navegador no deja empezar con sonido, arrancan en silencio; un clic activa o
+  // quita el sonido)
+  $$('video.video-auto').forEach((v) => {
+    let visible = false;
+    const reproducir = () => {
+      v.muted = false;
+      const pr = v.play();
+      if (pr && pr.catch) pr.catch(() => { v.muted = true; v.play().catch(() => {}); });
+    };
+    v.addEventListener('click', () => { v.muted = !v.muted; if (v.paused) v.play().catch(() => {}); });
+    new IntersectionObserver((ents) => {
+      ents.forEach((en) => {
+        const ahora = en.isIntersecting && en.intersectionRatio >= .5;
+        if (ahora === visible) return;
+        visible = ahora;
+        if (visible) reproducir(); else v.pause();
+      });
+    }, { threshold: [0, .5, 1] }).observe(v);
+  });
+
+  $$('.carrusel').forEach((car) => {
+    const pista = $('.carrusel__pista', car);
+    const fotos = $$('.carrusel__foto', car);
+    const puntos = $$('.carrusel__puntos button', car);
+    const ant = $('.carrusel__btn--ant', car);
+    const sig = $('.carrusel__btn--sig', car);
+    const actual = () => Math.round(pista.scrollLeft / Math.max(1, pista.clientWidth));
+    const ir = (i) => {
+      i = Math.max(0, Math.min(fotos.length - 1, i));
+      pista.scrollTo({ left: i * pista.clientWidth, behavior: 'smooth' });
+    };
+    const pintar = () => {
+      const i = actual();
+      puntos.forEach((p, k) => p.setAttribute('aria-current', k === i ? 'true' : 'false'));
+      ant.disabled = i === 0;
+      sig.disabled = i === fotos.length - 1;
+    };
+    ant.addEventListener('click', () => ir(actual() - 1));
+    sig.addEventListener('click', () => ir(actual() + 1));
+    puntos.forEach((p, k) => p.addEventListener('click', () => ir(k)));
+    pista.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); ir(actual() + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); ir(actual() - 1); }
+    });
+    let t = null;
+    pista.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(pintar, 60); }, { passive: true });
+    window.addEventListener('resize', () => { pista.scrollLeft = actual() * pista.clientWidth; });
+    // arrastrar con el ratón
+    let arrastre = null;
+    pista.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      arrastre = { x: e.clientX, i: actual() };
+      pista.style.scrollSnapType = 'none'; pista.style.scrollBehavior = 'auto';
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!arrastre) return;
+      pista.scrollLeft = arrastre.i * pista.clientWidth - (e.clientX - arrastre.x);
+    });
+    window.addEventListener('pointerup', (e) => {
+      if (!arrastre) return;
+      const dx = e.clientX - arrastre.x, i0 = arrastre.i;
+      arrastre = null;
+      pista.style.scrollSnapType = ''; pista.style.scrollBehavior = '';
+      ir(Math.abs(dx) > pista.clientWidth * .12 ? i0 + (dx < 0 ? 1 : -1) : i0);
+    });
+    pintar();
+  });
+
+  /* =========================================================
+     CONTACTO: formulario + carta que entra en el sobre
+     (pasos de las mesas CONTACTO 4 → 9 de Illustrator)
+     ========================================================= */
+  const form = $('#form-contacto');
+  const wrap = $('#env-wrap');
+  const sombra = $('#card-sombra');
+  const solapaAtras = $('#solapa-atras');
+  const solapaDelante = $('#solapa-delante');
+  const status = $('#form-msg');
+  const btn = $('#btn-enviar');
+  const snd = $('#snd-enviado');
+  const errs = { email: $('#err-email'), asunto: $('#err-asunto'), nota: $('#err-nota') };
+  let sending = false;
+
+  const play = (el, frames, opts) => el.animate(frames, { fill: 'forwards', ...opts }).finished;
+  const clearAnims = () => [wrap, form, sombra, solapaAtras, solapaDelante].forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
+  const setStatus = (html, kind) => {
+    status.classList.toggle('is-ok', kind === 'ok');
+    status.innerHTML = html || '';
+  };
+
+  /* ----- validación: el aviso sale debajo de cada campo ----- */
+  const RULES = {
+    email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : v ? 'Escribe un email válido.' : 'Escribe tu email.'),
+    asunto: (v) => (v ? '' : 'Escribe un asunto.'),
+    nota: (v) => (v ? '' : 'Escribe una nota.')
+  };
+  function check(name, shake) {
+    const el = form[name];
+    const msg = RULES[name](el.value.trim());
+    errs[name].textContent = msg;
+    el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    el.classList.remove('is-error');
+    if (msg) { if (shake) void el.offsetWidth; el.classList.add('is-error'); }
+    return !msg;
+  }
+  ['email', 'asunto', 'nota'].forEach((name) => {
+    const el = form[name];
+    el.addEventListener('input', () => { setStatus(''); if (errs[name].textContent) check(name); });
+    el.addEventListener('blur', () => { if (el.value.trim()) check(name); });
+  });
+
+  async function sendForm() {
+    if (CFG.demo) { await sleep(700); return true; }
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 15000);
+      const email = form.email.value.trim();
+      const asunto = form.asunto.value.trim();
+      const res = await fetch(CFG.formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email,
+          asunto,
+          nota: form.nota.value.trim(),
+          _subject: asunto,          // el asunto que escribe la persona es el asunto del correo que recibes
+          _replyto: email,           // al pulsar "responder" contestas directamente a esa persona
+          _template: 'table',
+          _captcha: 'false',
+          _honey: form._honey.value
+        }),
+        signal: ctrl.signal
+      });
+      clearTimeout(t);
+      const data = await res.json().catch(() => ({}));
+      return res.ok && String(data.success) !== 'false';
+    } catch (_) { return false; }
+  }
+
+  /* coordenadas y tiempos calcados del CSS de referencia (animación en bucle de 7.7s);
+     aquí arrancan en el instante del clic en vez de repetirse solas, y el tramo en que
+     el sobre queda oculto (fuera de pantalla) espera a la respuesta real del envío */
+  async function animateSend(request) {
+    const u = wrap.offsetWidth / 1072;
+    try { snd.currentTime = 0; snd.play().catch(() => {}); } catch (_) {}
+    const T = (x, y) => `translate(${x * u}px, ${y * u}px)`;
+    const Y = (v) => `translateY(${v * u}px)`;
+    const OPEN = 'translateY(16.75px) scaleY(1) translateY(-16.75px)';
+    const SHUT = 'translateY(16.75px) scaleY(-1) translateY(-16.75px)';
+
+    btn.classList.add('is-away');
+
+    // la carta se hunde en el sobre
+    const cardIn = play(form, [{ transform: Y(0) }, { transform: Y(576) }],
+      { duration: 1300, easing: 'cubic-bezier(.65,0,.35,1)' });
+    play(sombra, [{ transform: Y(0) }, { transform: Y(576) }],
+      { duration: 1300, easing: 'cubic-bezier(.65,0,.35,1)' }).catch(() => {});
+    // la solapa gira sobre su borde superior hasta quedar boca abajo (sellada); al llegar
+    // de canto (invisible) se cambia cuál de las dos copias se ve, para que el giro se vea
+    // igual tanto por detrás como por delante de la carta
+    const flipA = play(solapaAtras, [{ transform: OPEN }, { transform: SHUT }], { duration: 800, delay: 1350, easing: 'cubic-bezier(.37,0,.63,1)' });
+    const flipD = play(solapaDelante, [{ transform: OPEN }, { transform: SHUT }], { duration: 800, delay: 1350, easing: 'cubic-bezier(.37,0,.63,1)' });
+    play(solapaAtras, [{ opacity: 1 }, { opacity: 0 }], { duration: 1, delay: 1750 }).catch(() => {});
+    play(solapaDelante, [{ opacity: 0 }, { opacity: 1 }], { duration: 1, delay: 1750 }).catch(() => {});
+    // con el sobre ya sellado entero: sube, coge impulso a la izquierda y sale por la derecha
+    const wRise = play(wrap, [{ transform: T(0, 0) }, { transform: T(0, -528) }], { duration: 1150, delay: 1950, easing: 'cubic-bezier(.65,0,.35,1)' });
+    const wDrift = play(wrap, [{ transform: T(0, -528) }, { transform: T(-40, -528) }], { duration: 500, delay: 3250, easing: 'cubic-bezier(.5,1,.89,1)' });
+    const wWhoosh = play(wrap, [{ transform: T(-40, -528) }, { transform: T(1530, -528) }], { duration: 550, delay: 3750, easing: 'cubic-bezier(.5,0,.75,0)' });
+    await Promise.all([cardIn, flipA, flipD, wRise, wDrift, wWhoosh]);
+
+    const ok = await request;
+    if (!ok) {
+      // no se ha podido enviar: todo vuelve atrás
+      [wrap, form, sombra, solapaAtras, solapaDelante].forEach((el) => el.getAnimations().forEach((a) => { a.playbackRate = -1.6; a.play(); }));
+      await Promise.all([wrap, form, sombra, solapaAtras, solapaDelante].flatMap((el) => el.getAnimations().map((a) => a.finished)));
+      clearAnims();
+      btn.classList.remove('is-away');
+      return false;
+    }
+
+    // reaparece por abajo y sube hasta su sitio; en el instante del salto (oculto,
+    // fuera de pantalla) la carta y la solapa vuelven a su estado de reposo
+    clearAnims();
+    form.reset();
+    Object.values(errs).forEach((p) => (p.textContent = ''));
+    $$('.field', form).forEach((f) => { f.classList.remove('is-error'); f.removeAttribute('aria-invalid'); });
+    play(form, [{ transform: Y(576) }, { transform: Y(0) }], { duration: 1 }).catch(() => {});
+    play(sombra, [{ transform: Y(576) }, { transform: Y(0) }], { duration: 1 }).catch(() => {});
+    play(solapaAtras, [{ transform: SHUT, opacity: 0 }, { transform: OPEN, opacity: 1 }], { duration: 1 }).catch(() => {});
+    play(solapaDelante, [{ transform: SHUT, opacity: 1 }, { transform: OPEN, opacity: 0 }], { duration: 1 }).catch(() => {});
+    play(wrap, [{ transform: T(1530, -528) }, { transform: T(0, 957) }], { duration: 1 }).catch(() => {});
+    const arrive = play(wrap, [{ transform: T(0, 957) }, { transform: T(0, 0) }], { duration: 1250, delay: 150, easing: 'cubic-bezier(.33,1,.68,1)' });
+    setTimeout(() => btn.classList.remove('is-away'), 1400);
+    await arrive;
+    clearAnims();
+    return true;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (sending) return;
+    setStatus('');
+    const valid = ['email', 'asunto', 'nota'].map((n) => check(n, true));
+    if (valid.includes(false)) { form[['email', 'asunto', 'nota'][valid.indexOf(false)]].focus(); return; }
+    sending = true; btn.disabled = true;
+    $$('.field', form).forEach((f) => (f.readOnly = true));
+    const ok = await animateSend(sendForm());
+    $$('.field', form).forEach((f) => (f.readOnly = false));
+    btn.disabled = false; sending = false;
+    if (ok) {
+      setStatus('¡Mensaje enviado! Te responderé pronto.', 'ok');
+      setTimeout(() => { if (!sending) setStatus(''); }, 8000);
+    } else {
+      setStatus(`No se pudo enviar. Escríbeme a <a href="mailto:${CFG.email}">${CFG.email}</a>.`);
+    }
+  });
+
+  /* ---------- arranque ---------- */
+  show(routeName());
+})();
+</script>
+</body>
+</html>
